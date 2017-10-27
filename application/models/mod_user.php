@@ -60,5 +60,23 @@ class Mod_user extends CI_Model{
         $result = $this->db->query($query);
         return $result->result();
     }
+
+    public function update_detail_user($id,$data){
+        $this->db->where('id',$id);
+        $this->db->update('t_user',$data);
+        return $this->db->affected_rows();
+    }
+
+    public function cek_password($id,$data){
+        $query = "select count(t_user.password) as jumlah from t_user where id='".$id."' and password='".$data["password"]."'";
+        $result = $this->db->query($query);
+        return $result->result();
+    }
+
+    public function update_password($id,$data){
+        $this->db->where('id',$id);
+        $this->db->update('t_user',$data);
+        return $this->db->affected_rows();
+    }
         
 }

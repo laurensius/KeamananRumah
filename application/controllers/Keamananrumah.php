@@ -6,21 +6,24 @@ class Keamananrumah extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('mod_user');
-	}
+    }
+    //------------------------------DAFTAR-------------------------------------- 
+    public function daftar(){
+        $this->load->view("apps/daftar");
+    }
+    //------------------------------END OF DAFTAR--------------------------------------
 
-
+    //------------------------------LANDING PAGE USER--------------------------------------
 	public function index(){
 		if($this->session->userdata("session_appssystem_code")){
             redirect(site_url()."/keamananrumah/dashboard");
         }else{
             $this->load->view("apps/login");
         }
-	}
-
-    public function daftar(){
-        $this->load->view("apps/daftar");
     }
+    //------------------------------END OF LANDING PAGE USER--------------------------------------
 
+    //------------------------------MENU DASHBOARD--------------------------------------
 	public function dashboard(){
 		if($this->session->userdata("session_appssystem_code")){
             $this->load->view("apps/header");
@@ -29,7 +32,7 @@ class Keamananrumah extends CI_Controller {
         }else{
             $this->load->view("apps/login");
         }
-	}
+    }
 
     public function profile(){
         if($this->session->userdata("session_appssystem_code")){
@@ -46,6 +49,31 @@ class Keamananrumah extends CI_Controller {
         }
     }
 
+    public function ubah_password(){
+        if($this->session->userdata("session_appssystem_code")){
+            $this->load->view("apps/header");
+            $this->load->view("apps/body_ubah_password");
+            $this->load->view("apps/footer");
+        }else{
+            $this->load->view("apps/login");
+        }
+    }
+    //------------------------------END OF MENU DASHBOARD--------------------------------------
+
+    //------------------------------MENU KELOLA PENGGUNA--------------------------------------
+    public function tambah_pengguna(){
+        if($this->session->userdata("session_appssystem_code")){
+            $this->load->view("apps/header");
+            $this->load->view("apps/body_tambah_pengguna");
+            $this->load->view("apps/footer");
+        }else{
+            $this->load->view("apps/login");
+        }
+    }
+    //------------------------------END OF MENU KELOLA PENGGUNA--------------------------------------
+	
+
+    //------------------------------LOGOUT--------------------------------------
 	public function logout(){
         if($this->session->userdata("session_appssystem_code")){
             $this->session->sess_destroy();
@@ -65,6 +93,7 @@ class Keamananrumah extends CI_Controller {
         }
         $this->load->view("apps/login",$return);
     }
+    //------------------------------END OF LOGOUT--------------------------------------
 
 	
 }

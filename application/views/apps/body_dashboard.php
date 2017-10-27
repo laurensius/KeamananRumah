@@ -3,7 +3,7 @@
                         <div class="page-bar">
                             <ul class="page-breadcrumb">
                                 <li>
-                                    <span>Dashnoard</span>
+                                    <span>Dashboard</span>
                                     <i class="fa fa-circle"></i>
                                 </li>
                                 <li>

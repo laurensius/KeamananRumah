@@ -13,6 +13,9 @@
                         </div>
                         <h1 class="page-title"> Profile</h1>
                         <div class="row">
+                            <div class="col-lg-12">
+                                <span id="notif"></span>
+                            </div>
                             <div class="col-lg-3">
                                 <div class="panel panel-default">
                                     <div class="panel-body">
@@ -51,21 +54,21 @@
                                                     <div class="form-group">
                                                         <label class="col-md-3 control-label">Username </label>
                                                         <div class="col-md-9">
-                                                            <input type="text" class="form-control" placeholder="Username" id="username" <?php echo $disabled; ?>>
+                                                            <input type="text" class="form-control" placeholder="Username" id="username" <?php echo $disabled; ?> required>
                                                             <!-- <span class="help-block"> A block of help text. </span> -->
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-md-3 control-label">Nama </label>
                                                         <div class="col-md-9">
-                                                            <input type="text" class="form-control" placeholder="Nama Lengkap Anda" id="nama" <?php echo $disabled; ?>>
+                                                            <input type="text" class="form-control" placeholder="Nama Lengkap Anda" id="nama" <?php echo $disabled; ?> required>
                                                             <!-- <span class="help-block"> A block of help text. </span> -->
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-md-3 control-label">Alamat</label>
                                                         <div class="col-md-9">
-                                                            <textarea class="form-control" placeholder="Alamat tempat tinggal" id="alamat" <?php echo $disabled; ?>></textarea>
+                                                            <textarea class="form-control" placeholder="Alamat tempat tinggal" id="alamat" <?php echo $disabled; ?>></textarea required>
                                                             <!-- <span class="help-block"> A block of help text. </span> -->
                                                         </div>
                                                     </div>
@@ -104,7 +107,7 @@
                                                     if($this->uri->segment(3)=="update"){
                                                     ?>
                                                     <a href="#">
-                                                        <button class="btn btn-primary pull-right">Simpan Data</button>
+                                                        <button class="btn btn-primary pull-right" id="btn_update">Update</button>
                                                     </a> 
                                                     <a href="<?php echo site_url() ?>/keamananrumah/profile/">
                                                         <button class="btn btn-warning pull-right" style="margin-right:10px;">Kembali</button>
@@ -127,6 +130,7 @@
                     </div>
                 </div>
                 <script type="text/javascript">
+                var notif = "";
                 $(document).ready(function(){
                     $.ajax({
                         url : '<?php echo site_url(); ?>/api/load_detail_user/<?php echo $this->session->userdata("session_appssystem_id"); ?>/' ,
@@ -146,6 +150,46 @@
                             alert("Terjadi kesalahan pada saat load detail user. Silahkan coba lagi (refresh browser Anda).");
                         },
                     });
+
+                    function update_profile(){
+                        var username = document.getElementById("username").value;
+                        var nama = document.getElementById("nama").value;
+                        var alamat = document.getElementById("alamat").value;
+                        if(username == "" || username == null  || nama == "" || nama == null || alamat == ""  || alamat == null  ){
+                            notif += '<div class="alert alert-warning alert-dismissable">';
+                            notif += 'Isi semua data dengan lengkap!'
+                            notif += '</div>';
+                            document.getElementById('notif').innerHTML = notif;
+                        }else{
+                            var post = {
+                                "username" : username,
+                                "nama" : nama,
+                                "alamat" : alamat
+                            }; 
+                            console.log(post);
+                            $.ajax({
+                                url : '<?php echo site_url(); ?>/api/update_detail_user/<?php echo $this->session->userdata("session_appssystem_id"); ?>/' ,
+                                type : 'POST',
+                                dataType : 'json',
+                                data : post,
+                                success : function(response){
+                                    console.log(response);
+                                    if(response.response.status_cek === 'FAILED' || response.response.status_cek === 'FOUND' || response.response.status_cek === 'NO DATA POSTED'){
+                                        notif += '<div class="alert alert-' + response.response.message_severity + ' alert-dismissable">';
+                                        notif += response.response.message;
+                                        notif += '</div>';
+                                        document.getElementById('notif').innerHTML = notif;
+                                    }else{
+                                        window.location = "<?php echo site_url(); ?>/keamananrumah/profile/";
+                                    }
+                                },
+                                error : function(response){
+                                    alert("Terjadi kesalahan pada saat update detail user. Silahkan coba lagi.");
+                                },
+                            });
+                        }  
+                    }
+                    $("#btn_update").click(update_profile);
                 });
                 </script>
 				

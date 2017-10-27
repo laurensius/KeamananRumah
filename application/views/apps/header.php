@@ -16,7 +16,7 @@
         <link href="<?php echo base_url();?>assets/global/css/components-md.min.css" rel="stylesheet" id="style_components" type="text/css" />
         <link href="<?php echo base_url();?>assets/global/css/plugins-md.min.css" rel="stylesheet" type="text/css" />
         <link href="<?php echo base_url();?>assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
-        <link href="<?php echo base_url();?>assets/layouts/layout/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color" />
+        <link href="<?php echo base_url();?>assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
         <link href="<?php echo base_url();?>assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
        <script src="<?php echo base_url();?>assets/global/plugins/jquery.min.js" type="text/javascript"></script>
         
@@ -42,7 +42,7 @@
                             <li class="dropdown dropdown-user">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="false">
                                     <!-- <img alt="" class="img-circle" src="<?php echo base_url();?>assets/layouts/layout/img/avatar3_small.jpg" /> -->
-                                    <span class="username username-hide-on-mobile">Laurensius Dede Suhardiman<?php //echo $this->session->userdata("session_appssystem_nama_lengkap"); ?></span>
+                                    <span class="username username-hide-on-mobile"><?php echo $this->session->userdata("session_appssystem_nama_lengkap"); ?></span>
                                     <i class="fa fa-angle-down"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-default">
@@ -102,7 +102,7 @@
                                 </a>
                                 <ul class="sub-menu">
                                     <li class="nav-item start">
-                                        <a href="<?php echo site_url(); ?>/keamananrumah/kelola_pengguna/" class="nav-link ">
+                                        <a href="<?php echo site_url(); ?>/keamananrumah/tambah_pengguna/" class="nav-link ">
                                             <i class="icon-plus"></i>
                                             <span class="title">Tambah Pengguna</span>
                                         </a>

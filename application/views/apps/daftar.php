@@ -126,7 +126,7 @@
                 var alamat = document.getElementById("alamat").value;
                 var notif = '';
                 if(username == "" || username == null || password == "" || password == null || 
-                nama == "" || nama == null || alamat == ""  || alamat == "" || alamat == null  ){
+                nama == "" || nama == null || alamat == ""  || alamat == null  ){
                     notif += '<div class="alert alert-warning alert-dismissable">';
                     notif += 'Isi semua data dengan lengkap!'
                     notif += '</div>';
@@ -144,8 +144,6 @@
                         dataType : "json",
                         data: post,
                         success : function(response){
-                            console.log(post);
-                            console.log(response);
                             if(response.response.status_cek === 'FAILED' || response.response.status_cek === 'FOUND' || response.response.status_cek === 'NO DATA POSTED'){
                                 notif += '<div class="alert alert-' + response.response.message_severity + ' alert-dismissable">';
                                 notif += response.response.message;
