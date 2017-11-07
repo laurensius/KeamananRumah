@@ -102,7 +102,6 @@
                                                     </div>
                                                 </form>
                                                 <div class="col-lg-12">
-                                                    
                                                     <?php
                                                     if($this->uri->segment(3)=="update"){
                                                     ?>

@@ -70,6 +70,30 @@ class Keamananrumah extends CI_Controller {
             $this->load->view("apps/login");
         }
     }
+
+    public function daftar_pengguna(){
+        if($this->session->userdata("session_appssystem_code")){
+            $this->load->view("apps/header");
+            if(($this->uri->segment(3) != "" || $this->uri->segment(3) != null) && ($this->uri->segment(4) != "" || $this->uri->segment(4) != null)){
+                if($this->uri->segment(3) == "edit"){
+                    $this->load->view("apps/body_daftar_pengguna_edit"); 
+                }else
+                if($this->uri->segment(3) == "view"){
+                    $this->load->view("apps/body_daftar_pengguna_view"); 
+                }else
+                if($this->uri->segment(3) == "delete"){
+                    $this->load->view("apps/body_daftar_pengguna_delete"); 
+                }else{
+                    $this->load->view("apps/body_daftar_pengguna");    
+                }
+            }else{
+                $this->load->view("apps/body_daftar_pengguna");
+            }
+            $this->load->view("apps/footer");
+        }else{
+            $this->load->view("apps/login");
+        }
+    }
     //------------------------------END OF MENU KELOLA PENGGUNA--------------------------------------
 	
 

@@ -78,5 +78,42 @@ class Mod_user extends CI_Model{
         $this->db->update('t_user',$data);
         return $this->db->affected_rows();
     }
+
+    //---------------------------LOAD USER -----------------
+    public function load_all_parent(){
+        $query = "select t_user.id, t_user.username,  t_user.nama, t_user.tipe, t_user.status "
+                ."from t_user "
+                ."where "
+                ."t_user.tipe = '2' and "
+                ."status = '1' order by id asc";
+        $result = $this->db->query($query);
+        return $result->result();
+    }
+
+    public function load_sibling_by_parent($parent){
+        $query = "select * "
+                ."from t_user "
+                ."where "
+                ."parent = '".$parent."' order by id asc";
+        $result = $this->db->query($query);
+        return $result->result();
+    }
+
+    public function load_all_user(){
+        $query = "select t_user.*, "
+                ."t_ref_tipe_user.tipe as tipe_user, "
+                ."t_ref_status_user.status as status_user "
+                ."from t_user "
+                ."inner join "
+                ."t_ref_tipe_user "
+                ."on t_ref_tipe_user.id = t_user.tipe "
+                ."inner join "
+                ."t_ref_status_user "
+                ."on t_ref_status_user.id = t_user.status "
+                ."where "
+                ."t_user.tipe <> '1' order by API_KEY asc";
+        $result = $this->db->query($query);
+        return $result->result();
+    }
         
 }

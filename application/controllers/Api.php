@@ -10,16 +10,6 @@ class Api extends CI_Controller {
 		$this->nama_server = "cccc";
 	}
 
-	public function load_detail_user(){
-		if($this->uri->segment(3) != null || $this->uri->segment(3) != ""){
-			$result = $this->mod_user->load_detail_user($this->uri->segment(3));
-			$data = array("response" => $result);
-			echo json_encode($data,JSON_PRETTY_PRINT);
-		}else{
-			echo "HTTP GET User Error, Pastikan anda kirim ID";
-		}
-	}
-
 	public function verifikasi(){
         if($this->input->post()!=null){
             $data = array(
@@ -56,21 +46,24 @@ class Api extends CI_Controller {
             if($resultcek[0]->status == 2){
                 $status_cek = "NOT MATCH";
                 $message = "User Anda diblokir! Anda tidak dapat login";
+                $severity = "danger";
                 $this->buat_session($resultcek);
             }else
             if($resultcek[0]->status == 1){
                 $status_cek = "MATCH";
                 $message = "Username dan password sesuai";
+                $severity = "success";
                 $this->buat_session($resultcek);
             }
         }else{
             $status_cek = "NOT MATCH";
             $message = "Username dan password tidak sesuai";
+            $severity = "warning";
         }
         $return = array(
             "status_cek" => $status_cek,
             "message" => $message,
-            "message_severity" => "warning",
+            "message_severity" => $severity,
             "data_user" => $resultcek
         );
         return $return;
@@ -285,4 +278,26 @@ class Api extends CI_Controller {
     function cek_password($id,$data){
         return $this->mod_user->cek_password($id,$data);
     }
+
+    public function load_detail_user(){
+		if($this->uri->segment(3) != null || $this->uri->segment(3) != ""){
+			$result = $this->mod_user->load_detail_user($this->uri->segment(3));
+			$data = array("response" => $result);
+			echo json_encode($data);
+		}else{
+			echo "HTTP GET User Error, Pastikan anda kirim ID";
+		}
+	}
+
+    function load_all_parent(){
+        $return = $this->mod_user->load_all_parent();
+        echo json_encode(array("response"=>$return));
+    }
+
+    function load_all_user(){
+        $return = $this->mod_user->load_all_user();
+        echo json_encode(array("response"=>$return),JSON_PRETTY_PRINT);
+    }
+
+
 }
