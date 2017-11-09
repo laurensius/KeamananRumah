@@ -311,7 +311,9 @@ class Api extends CI_Controller {
                 "outdoor" => $this->uri->segment(4),
                 "indoor" => $this->uri->segment(5),
                 "ussrf" => $this->uri->segment(6),
-                "API_KEY" => $this->uri->segment(7));
+                "API_KEY" => $this->uri->segment(7),
+                "datetime" => date("Y-m-d H:i:s"));
+
             $return = "#".$this->mod_device->post_sensor_data($data)."^";
         }else{
             $return = "#0^";

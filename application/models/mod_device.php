@@ -6,5 +6,4 @@ class Mod_device extends CI_Model{
 		$this->db->insert('t_sensor',$data);
         return $this->db->affected_rows();
     }
-
 }
