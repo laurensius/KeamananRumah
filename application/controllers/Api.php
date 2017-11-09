@@ -7,7 +7,7 @@ class Api extends CI_Controller {
 		parent::__construct();
 		header('Content-Type:application/json');
 		$this->load->model('mod_user');
-		$this->nama_server = "cccc";
+        $this->load->model('mod_device');
 	}
 
 	function verifikasi(){
@@ -300,4 +300,22 @@ class Api extends CI_Controller {
     }
 
 
+
+    //-------------------------------- DEVICE -------------------------------------------------
+    //                                           1          2         3      4      5      6
+    // http://localhost/keamananrumah/index.php/api/post_sensor_data/state/outdoor/indoor/ussrf/
+    function post_sensor_data(){
+        if($this->uri->segment(3)!=null && $this->uri->segment(4)!=null && $this->uri->segment(5)!=null && $this->uri->segment(6)!=null && $this->uri->segment(7)!=null ){
+            $data = array(
+                "state" => $this->uri->segment(3),
+                "outdoor" => $this->uri->segment(4),
+                "indoor" => $this->uri->segment(5),
+                "ussrf" => $this->uri->segment(6),
+                "API_KEY" => $this->uri->segment(7));
+            $return = "#".$this->mod_device->post_sensor_data($data)."^";
+        }else{
+            $return = "#0^";
+        }
+        echo $return;
+    }
 }
