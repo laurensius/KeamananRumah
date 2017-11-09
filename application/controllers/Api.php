@@ -311,10 +311,17 @@ class Api extends CI_Controller {
                 "outdoor" => $this->uri->segment(4),
                 "indoor" => $this->uri->segment(5),
                 "ussrf" => $this->uri->segment(6),
+<<<<<<< HEAD
                 "API_KEY" => $this->uri->segment(7),
                 "datetime" => date("Y-m-d H:i:s"));
 
             $return = "#".$this->mod_device->post_sensor_data($data)."^";
+=======
+                "API_KEY" => $this->uri->segment(7));
+            // $return = "#".$this->mod_device->post_sensor_data($data)."^";
+            $response = $this->mod_device->itung_rows();
+            $return = "#".$response[0]->jumlah."^";
+>>>>>>> 6b262a253bbcc2424520fd8348c441340316f993
         }else{
             $return = "#0^";
         }
