@@ -140,13 +140,16 @@
                             document.getElementById("username").value = response.response[0].username;
                             document.getElementById("nama").value = response.response[0].nama;
                             document.getElementById("alamat").value = response.response[0].alamat;
-                            document.getElementById("tipe").value = response.response[0].tipe;
+                            document.getElementById("tipe").value = response.response[0].tipe_user;
                             document.getElementById("register_date").value = response.response[0].register_datetime;
                             document.getElementById("API_KEY").value = response.response[0].API_KEY;
                             document.getElementById("secure_key").value = response.response[0].secure_key;
                         },
                         error : function(response){
-                            alert("Terjadi kesalahan pada saat load detail user. Silahkan coba lagi (refresh browser Anda).");
+                            notif += '<div class="alert alert-danger alert-dismissable">';
+                            notif += 'Terjadi kesalahan pada saat load detail user. Silahkan coba lagi (refresh browser Anda).';
+                            notif += '</div>';
+                            document.getElementById('notif').innerHTML = notif;
                         },
                     });
 
@@ -183,7 +186,10 @@
                                     }
                                 },
                                 error : function(response){
-                                    alert("Terjadi kesalahan pada saat update detail user. Silahkan coba lagi.");
+                                    notif += '<div class="alert alert-danger alert-dismissable">';
+                                    notif += 'Terjadi kesalahan pada saat update detail profile. Silahkan coba lagi.';
+                                    notif += '</div>';
+                                    document.getElementById('notif').innerHTML = notif;
                                 },
                             });
                         }  

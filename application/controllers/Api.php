@@ -3,14 +3,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Api extends CI_Controller {
 
-	public function __construct(){
+	function __construct(){
 		parent::__construct();
 		header('Content-Type:application/json');
 		$this->load->model('mod_user');
 		$this->nama_server = "cccc";
 	}
 
-	public function verifikasi(){
+	function verifikasi(){
         if($this->input->post()!=null){
             $data = array(
             "username" => $this->input->post('username'),
@@ -37,11 +37,11 @@ class Api extends CI_Controller {
 		echo json_encode(array("response"=>$return));
     }
     
-    public function get_user_by_username($data){
+    function get_user_by_username($data){
         return $this->mod_user->get_user_by_username($data);
     }
     
-    public function matching($data,$resultcek){
+    function matching($data,$resultcek){
         if($data["username"] == $resultcek[0]->username && $data["password"] == $resultcek[0]->password){
             if($resultcek[0]->status == 2){
                 $status_cek = "NOT MATCH";
@@ -69,7 +69,7 @@ class Api extends CI_Controller {
         return $return;
     }
 
-    public function buat_session($resultcek){
+    function buat_session($resultcek){
         $waktu = date("Y-m-d H:i:s");
         $this->update_login_timestamp($resultcek[0]->id,array("last_login" => $waktu));
         $data_session = array(
@@ -85,11 +85,11 @@ class Api extends CI_Controller {
         $this->session->set_userdata($data_session);
     }
     
-    public function update_login_timestamp($id,$data){
+    function update_login_timestamp($id,$data){
         $this->mod_user->update_login_timestamp($id,$data);
     }
 
-    public function verifikasi_daftar(){
+    function verifikasi_daftar(){
         if($this->input->post()!=null){
             $username = $this->input->post('username');
             $password = $this->input->post('password');
@@ -279,7 +279,7 @@ class Api extends CI_Controller {
         return $this->mod_user->cek_password($id,$data);
     }
 
-    public function load_detail_user(){
+    function load_detail_user(){
 		if($this->uri->segment(3) != null || $this->uri->segment(3) != ""){
 			$result = $this->mod_user->load_detail_user($this->uri->segment(3));
 			$data = array("response" => $result);

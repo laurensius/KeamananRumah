@@ -30,6 +30,28 @@
                                     <div class="portlet-body">
                                         <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; min-height: 2  0px;">
                                             <div class="scroller" style="min-height: 20px; overflow: hide; width: auto;" data-initialized="1">
+                                                <!-- <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <form class="form-horizontal">
+                                                            <div class="form-group">
+                                                                <div class="col-lg-3">
+                                                                    <select class="form-control" id="kategori">
+                                                                        <option value="null">Pilih Kategori Pencarian</option>
+                                                                        <option value="username">Username</option>
+                                                                        <option value="nama">Nama Pengguna</option>
+                                                                        <option value="alamat">Alamat</option>
+                                                                        <option value="status">Status</option>
+                                                                        <option value="tipe_user">Tipe User</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-lg-3">
+                                                                    <input type="text" class="form-control" placeholder="Kata kunci pencarian" id="berdasar" required> 
+                                                                </div>
+                                                                
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div> -->
                                                 <table class="table table-striped table-hover">
                                                     <thead>
                                                         <tr>

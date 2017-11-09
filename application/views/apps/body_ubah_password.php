@@ -111,7 +111,10 @@
                                     }
                                 },
                                 error : function(response){
-                                    alert("Terjadi kesalahan pada saat update detail user. Silahkan coba lagi.");
+                                    notif += '<div class="alert alert-danger alert-dismissable">';
+                                    notif += 'Terjadi kesalahan pada saat update password. Silahkan coba lagi.';
+                                    notif += '</div>';
+                                    document.getElementById('notif').innerHTML = notif;
                                 },
                             });
                         } 

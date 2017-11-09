@@ -131,7 +131,10 @@
                                         }
                                     },
                                     error : function(response){
-                                        alert("Terjadi kesalahan pada saat proses pendaftaran. Silahkan coba lagi.");
+                                        notif += '<div class="alert alert-danger alert-dismissable">';
+                                        notif += 'Terjadi kesalahan pada saat proses pendaftaran. Silahkan coba lagi.';
+                                        notif += '</div>';
+                                        document.getElementById('notif').innerHTML = notif;
                                     },
                                 });
                             }
