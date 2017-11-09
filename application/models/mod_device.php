@@ -13,4 +13,8 @@ class Mod_device extends CI_Model{
         return $result->result();
     }
 
+    function itung_rows(){
+        $result = $this->db->query("select count(*) as jumlah from t_sensor");
+        return $result->result();
+    }
 }

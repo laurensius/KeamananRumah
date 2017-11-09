@@ -312,7 +312,9 @@ class Api extends CI_Controller {
                 "indoor" => $this->uri->segment(5),
                 "ussrf" => $this->uri->segment(6),
                 "API_KEY" => $this->uri->segment(7));
-            $return = "#".$this->mod_device->post_sensor_data($data)."^";
+            // $return = "#".$this->mod_device->post_sensor_data($data)."^";
+            $response = $this->mod_device->itung_rows();
+            $return = "#".$response[0]->jumlah."^";
         }else{
             $return = "#0^";
         }
