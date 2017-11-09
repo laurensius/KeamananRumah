@@ -318,4 +318,9 @@ class Api extends CI_Controller {
         }
         echo $return;
     }
+
+    function recent(){
+        $return = $this->mod_device->recent($this->uri->segment(3));
+        echo json_encode(array("response"=>$return),JSON_PRETTY_PRINT);
+    }
 }

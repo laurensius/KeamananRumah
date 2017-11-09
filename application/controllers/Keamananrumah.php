@@ -95,7 +95,22 @@ class Keamananrumah extends CI_Controller {
         }
     }
     //------------------------------END OF MENU KELOLA PENGGUNA--------------------------------------
-	
+
+    //------------------------------MONITORING--------------------------------------
+    function monitoring(){
+        if($this->session->userdata("session_appssystem_code")){
+            $this->load->view("apps/header");
+            $this->load->view("apps/body_monitoring");
+            $this->load->view("apps/footer");
+        }else{
+            $this->load->view("apps/login");
+        }
+    }
+    //------------------------------END OF MONITORING--------------------------------------
+
+
+
+
 
     //------------------------------LOGOUT--------------------------------------
 	public function logout(){
