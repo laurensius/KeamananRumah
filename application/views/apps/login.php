@@ -51,7 +51,7 @@
                                     <div class="forgot-password">
                                         <a href="<?php echo site_url() ?>/keamananrumah/daftar/">Klik di sini untuk daftar</a>
                                     </div>
-                                    <button class="btn green" onClick="cek();" type="submit">Login</button>
+                                    <button class="btn green"  onclick="cek();" type="submit">Login</button>
                                 </div>
                             </div>
                         </form>
@@ -88,6 +88,7 @@
             </div>
         </div>
         <script type="text/javascript">
+        
         function cek(){
             var input_u = encodeURI(document.getElementById("username").value);
             var input_p = encodeURI(document.getElementById("password").value);

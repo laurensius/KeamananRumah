@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Automation System</title>
+        <title>Keamanan Rumah</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="Automation System " name="description" />
@@ -20,7 +20,7 @@
         <link href="<?php echo base_url();?>assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
        <script src="<?php echo base_url();?>assets/global/plugins/jquery.min.js" type="text/javascript"></script>
         
-        <link rel="shortcut icon" href="favicon.ico" /> 
+        <link rel="shortcut icon" href="<?php echo base_url();?>assets/img/favicon.ico" /> 
     </head>
     <body class="page-header-fixed page-sidebar-closed page-sidebar-closed-hide-logo page-content-white page-md">
         <div class="page-wrapper">

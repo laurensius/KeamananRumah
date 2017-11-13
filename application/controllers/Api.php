@@ -47,7 +47,7 @@ class Api extends CI_Controller {
                 $status_cek = "NOT MATCH";
                 $message = "User Anda diblokir! Anda tidak dapat login";
                 $severity = "danger";
-                $this->buat_session($resultcek);
+                //$this->buat_session($resultcek);
             }else
             if($resultcek[0]->status == 1){
                 $status_cek = "MATCH";
@@ -305,19 +305,16 @@ class Api extends CI_Controller {
     //                                           1          2         3      4      5      6
     // http://localhost/keamananrumah/index.php/api/post_sensor_data/state/outdoor/indoor/ussrf/
     function post_sensor_data(){
-        if($this->uri->segment(3)!=null && $this->uri->segment(4)!=null && $this->uri->segment(5)!=null && $this->uri->segment(6)!=null && $this->uri->segment(7)!=null ){
+        if($this->uri->segment(3)!=null && $this->uri->segment(4)!=null && $this->uri->segment(5)!=null && $this->uri->segment(6)!=null && $this->uri->segment(7)!=null && $this->uri->segment(8)!=null){
             $data = array(
                 "state" => $this->uri->segment(3),
                 "outdoor" => $this->uri->segment(4),
                 "indoor" => $this->uri->segment(5),
                 "ussrf" => $this->uri->segment(6),
-                "API_KEY" => $this->uri->segment(7),
+                "magnetic" => $this->uri->segment(7),
+                "API_KEY" => $this->uri->segment(8),
                 "datetime" => date("Y-m-d H:i:s"));
-
-            $return = "#".$this->mod_device->post_sensor_data($data)."^";
-
-                "API_KEY" => $this->uri->segment(7));
-            // $return = "#".$this->mod_device->post_sensor_data($data)."^";
+            $this->mod_device->post_sensor_data($data);
             $response = $this->mod_device->itung_rows();
             $return = "#".$response[0]->jumlah."^";
         }else{

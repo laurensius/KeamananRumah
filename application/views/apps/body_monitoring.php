@@ -86,6 +86,9 @@
                 </div>
                 <script type="text/javascript">
                 var notif = "";
+                var stat_indoor;
+                var stat_outdoor;
+                var stat_magnet;
                 $(document).ready(function(){
                     function load_recent(){
                         $.ajax({
@@ -94,8 +97,29 @@
                             dataType : 'json',
                             success : function(response){
                                 console.log(response);
-                                $("#outdoor_status").html(response.response[0].outdoor);
-                                $("#indoor_status").html(response.response[0].indoor);
+                                if(response.response[0].outdoor == "1" ){
+                                    stat_outdoor = "<br> Orang tidak dikenal terdeteksi di luar rumah";
+                                }else
+                                if(response.response[0].outdoor == "0" ){
+                                    stat_outdoor = "<br> Tidak ada orang terdeteksi di luar rumah";
+                                }
+
+                                if(response.response[0].indoor == "1" ){
+                                    stat_indoor = "<br> Orang tidak dikenal terdeteksi di dalam rumah";
+                                }else
+                                if(response.response[0].indoor == "0" ){
+                                    stat_indoor = "<br> Tidak ada orang terdeteksi di dalam rumah";
+                                }
+
+                                if(response.response[0].magnetic == "1" ){
+                                    stat_magnet = "<br> Pintu terbuka";
+                                }else
+                                if(response.response[0].magnetic == "0" ){
+                                    stat_magnet = "<br> Pintu tertutup";
+                                }
+                                $("#outdoor_status").html(response.response[0].outdoor + stat_outdoor);
+                                $("#indoor_status").html(response.response[0].indoor + stat_indoor);
+                                $("#door_lock_status").html(response.response[0].magnetic + stat_magnet);
                             },
                             error : function(response){
                                 notif += '<div class="alert alert-danger alert-dismissable">';
