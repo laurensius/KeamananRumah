@@ -35,7 +35,7 @@
                             </div>
                             <div class="col-lg-9">
                                 
-                                <div class="portlet box grey-silver">
+                                <div class="portlet box blue-chambray">
                                     <div class="portlet-title">
                                         <div class="caption">
                                             <i class="fa fa-gift"></i>Profile</div>

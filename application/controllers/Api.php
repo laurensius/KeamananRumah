@@ -299,6 +299,40 @@ class Api extends CI_Controller {
         echo json_encode(array("response"=>$return),JSON_PRETTY_PRINT);
     }
 
+    function delete_user(){
+        if($this->uri->segment(3) != null){
+            $tipe = $this->cek_tipe_user($this->uri->segment(3));
+            $jumlah_awal = $this->jumlah_user();
+            if($tipe[0]->tipe == "2"){
+                if($this->mod_user->delete_family($tipe[0]->API_KEY)){
+
+                }else{
+                    $return["affected_rows"] = 0;
+                }
+            }else
+            if($tipe[0]->tipe == "3"){
+                if($this->mod_user->delete_single_user($this->uri->segment(3))){
+
+                }else{
+                    $return["affected_rows"] = 0;
+                }
+            }
+            $jumlah_akhir = $this->jumlah_user();
+            $return["affected_rows"] = $jumlah_awal[0]->jumlah - $jumlah_akhir[0]->jumlah;
+        }else{
+            $return["affected_rows"] = 0;
+        }
+        echo json_encode(array("response"=>$return),JSON_PRETTY_PRINT);
+    }
+
+    function cek_tipe_user($id){
+        return $this->mod_user->get_tipe_user($id);
+    }
+
+    function jumlah_user(){
+        return $this->mod_user->jumlah_user();
+    }
+
 
 
     //-------------------------------- DEVICE -------------------------------------------------

@@ -125,5 +125,28 @@ class Mod_user extends CI_Model{
         $query = $this->db->query($query_str);
         return $query->result();
     }
-        
+
+
+    function get_tipe_user($id){
+        $query_str = "Select tipe,API_KEY from t_user where id='".$id."'";
+        $query = $this->db->query($query_str);
+        return $query->result();
+    }
+
+    function jumlah_user(){
+        $query_str = "select count(*) as jumlah from t_user where tipe <> '1'";
+        $query = $this->db->query($query_str);
+        return $query->result();
+    }
+
+    function delete_single_user($id){
+        $query_str = "delete from t_user where id='".$id."'";
+        $query = $this->db->query($query_str);
+    }
+
+    function delete_family($API_KEY){
+        $query_str = "delete from t_user where API_KEY='".$API_KEY."'";
+        $query = $this->db->query($query_str);
+    }
+    
 }

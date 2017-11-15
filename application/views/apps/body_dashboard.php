@@ -68,7 +68,7 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-4">
-                                <div class="portlet box green-meadow">
+                                <div class="portlet box blue-chambray">
                                     <div class="portlet-title">
                                         <div class="caption">
                                             <i class="fa fa-gift"></i>Pengguna Aktif</div>

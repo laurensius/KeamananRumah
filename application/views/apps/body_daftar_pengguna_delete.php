@@ -28,7 +28,7 @@
                                     </div>
                                 </span>
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-12" id="detail">
                                 <div class="portlet box green-meadow">
                                     <div class="portlet-title">
                                         <div class="caption">
@@ -102,6 +102,7 @@
                     </div>
                 </div>
                 <script>
+                var notif = '';
                 $(document).ready(function(){
                     $.ajax({
                         url : '<?php echo site_url(); ?>/api/load_detail_user/<?php echo $this->uri->segment(4); ?>/' ,
@@ -127,7 +128,31 @@
                 });
 
                 function ya(id){
-                    alert(id);
+                    $.ajax({
+                        url : '<?php echo site_url(); ?>/api/delete_user/<?php echo $this->uri->segment(4); ?>/' ,
+                        type : 'GET',
+                        dataType : 'json',
+                        success : function(response){
+                            console.log(response);
+                            if(response.response.affected_rows > 0){
+                                notif += '<div class="alert alert-success alert-dismissable">';
+                                notif += 'Hapus pengguna berhasil.';
+                                notif += '<span class="right">';
+                                notif += '<a href="<?php echo site_url(); ?>/keamananrumah/daftar_pengguna/"> <button class="btn"> Tidak!</button></a>';
+                                notif += '</span>';
+                                notif += '</div>';
+                                document.getElementById('notif').innerHTML = notif;
+                                document.getElementById('detail').innerHTML = '';
+                            }
+                            
+                        },
+                        error : function(response){
+                            notif += '<div class="alert alert-danger alert-dismissable">';
+                            notif += 'Terjadi kesalahan pada saat proses hapus pengguna. Silahkan coba lagi (refresh browser Anda).';
+                            notif += '</div>';
+                            document.getElementById('notif').innerHTML = notif;
+                        },
+                    });
                 }
                 </script>
                 
