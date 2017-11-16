@@ -198,7 +198,7 @@ class Api extends CI_Controller {
         }
     }
 
-    function update_detail_user(){
+    function update_detail_user(){ //Profile
         if(($this->uri->segment(3) != "" || $this->uri->segment(3) != null ) && $this->input->post() != null ){
             $username = $this->input->post('username');
             $nama = $this->input->post('nama');
@@ -232,6 +232,51 @@ class Api extends CI_Controller {
             );
         }
         echo json_encode(array("response"=>$return));
+    }
+
+    function update_pengguna(){ //user
+        if(($this->uri->segment(3) != "" || $this->uri->segment(3) != null ) && $this->input->post() != null ){
+            $password = $this->input->post('password');
+            $status = $this->input->post('status');
+            $nama = $this->input->post('nama');
+            $alamat = $this->input->post('alamat');
+            $pwd = $this->mod_user->get_password_by_id($this->uri->segment(3));
+            if($password == $pwd[0]->password || MD5($password) == $pwd[0]->password){
+                $data = array(
+                    "nama" => $nama,
+                    "status" => $status,
+                    "alamat" => $alamat);
+            }else{
+                $password = MD5($password);
+                $data = array(
+                    "password" => $password,
+                    "nama" => $nama,
+                    "status" => $status,
+                    "alamat" => $alamat);
+            }
+            $resultcek = $this->mod_user->update_pengguna($this->uri->segment(3),$data);
+            if($resultcek > 0){
+                $return = array(
+                    "status_cek" => "SUCCESS",
+                    "message" => "Update berhasil",
+                    "message_severity" => "success",
+                    "data_user" => null);    
+            }else{
+                $return = array(
+                    "status_cek" => "FAILED",
+                    "message" => "Update gagal. Silahkan coba lagi.",
+                    "message_severity" => "warning",
+                    "data_user" => null);  
+            }
+        }else{
+            $return = array(
+                "status_cek" => "NO DATA POSTED",
+                "message" => "Tidak ada data dikirim ke server!",
+                "message_severity" => "danger",
+                "data_user" => null
+            );
+        }
+        echo json_encode(array("response"=>$return,"affected" => $resultcek));
     }
 
     function update_password(){

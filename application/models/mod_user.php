@@ -60,6 +60,12 @@ class Mod_user extends CI_Model{
         return $this->db->affected_rows();
     }
 
+    function update_pengguna($id,$data){
+        $this->db->where('id',$id);
+        $this->db->update('t_user',$data);
+        return $this->db->affected_rows();
+    }
+
     function cek_password($id,$data){
         $query = "select count(t_user.password) as jumlah from t_user where id='".$id."' and password='".$data["password"]."'";
         $result = $this->db->query($query);
@@ -148,5 +154,10 @@ class Mod_user extends CI_Model{
         $query_str = "delete from t_user where API_KEY='".$API_KEY."'";
         $query = $this->db->query($query_str);
     }
-    
+  
+    function get_password_by_id($id){
+        $query_str = "select t_user.password as password from t_user where id='".$id."'";
+        $query = $this->db->query($query_str);
+        return $query->result();
+    }
 }
