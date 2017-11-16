@@ -101,12 +101,16 @@
                                     <span class="arrow"></span>
                                 </a>
                                 <ul class="sub-menu">
+                                    <?php
+                                    if($this->session->userdata("session_appssystem_tipe_user") == "1" || $this->session->userdata("session_appssystem_tipe_user") == "2"){
+                                    ?>
                                     <li class="nav-item start">
                                         <a href="<?php echo site_url(); ?>/keamananrumah/tambah_pengguna/" class="nav-link ">
                                             <i class="icon-plus"></i>
                                             <span class="title">Tambah Pengguna</span>
                                         </a>
                                     </li>
+                                    <?php } ?>
                                     <li class="nav-item start ">
                                         <a href="<?php echo site_url(); ?>/keamananrumah/daftar_pengguna/" class="nav-link ">
                                             <i class="icon-user-following"></i>

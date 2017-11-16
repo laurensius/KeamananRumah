@@ -115,6 +115,25 @@ class Mod_user extends CI_Model{
         return $result->result();
     }
 
+    function load_all_family($API_KEY){
+        $query = "select t_user.*, "
+                ."t_ref_tipe_user.tipe as tipe_user, "
+                ."t_ref_status_user.status as status_user "
+                ."from t_user "
+                ."inner join "
+                ."t_ref_tipe_user "
+                ."on t_ref_tipe_user.id = t_user.tipe "
+                ."inner join "
+                ."t_ref_status_user "
+                ."on t_ref_status_user.id = t_user.status "
+                ."where "
+                ."t_user.tipe <> '1' and "
+                ."t_user.API_KEY ='".$API_KEY."' order by API_KEY asc";
+        $result = $this->db->query($query);
+        return $result->result();
+    }
+
+
     function load_detail_user($id){
         $query_str = "select t_user.*, "
         ."t_ref_tipe_user.tipe as tipe_user, "

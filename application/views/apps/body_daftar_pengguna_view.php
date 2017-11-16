@@ -21,7 +21,7 @@
                                 <span id="notif"></span>
                             </div>
                             <div class="col-lg-12">
-                                <div class="portlet box green-meadow">
+                                <div class="portlet box blue-chambray">
                                     <div class="portlet-title">
                                         <div class="caption">
                                             <i class="fa fa-users"></i>View Pengguna
@@ -86,12 +86,14 @@
                                                     </div>
                                                 </form>
                                                 <div class="col-lg-12">
+                                                    <?php if($this->session->userdata("session_appssystem_tipe_user") == "1" || $this->session->userdata("session_appssystem_tipe_user") == "2"){ ?>
                                                     <a href="<?php echo site_url() ?>/keamananrumah/daftar_pengguna/delete/<?php echo $this->uri->segment(4); ?>/">
                                                         <button class="btn btn-danger pull-right" style="margin-right:10px;">Hapus</button>
                                                     </a>
                                                     <a href="<?php echo site_url() ?>/keamananrumah/daftar_pengguna/edit/<?php echo $this->uri->segment(4); ?>/">
                                                         <button class="btn btn-primary pull-right" id="btn_edit" style="margin-right:10px;">Edit</button>
                                                     </a>
+                                                    <?php } ?>
                                                     <a href="<?php echo site_url() ?>/keamananrumah/daftar_pengguna/">
                                                         <button class="btn btn-warning pull-right" style="margin-right:10px;">Kembali</button>
                                                     </a> 

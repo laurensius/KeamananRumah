@@ -344,9 +344,20 @@ class Api extends CI_Controller {
         echo json_encode(array("response"=>$return),JSON_PRETTY_PRINT);
     }
 
+    function load_all_family(){
+        if($this->uri->segment(3) == null){
+            $return = array("data" => "null");
+        }else{
+            // echo $this->uri->segment(3);
+            $return = $this->mod_user->load_all_family($this->uri->segment(3)); //API_KEY
+            // $return = array("data" => $this->uri->segment(3));
+        }
+        echo json_encode(array("response"=>$return),JSON_PRETTY_PRINT);
+    }
+
     function delete_user(){
         if($this->uri->segment(3) != null){
-            $tipe = $this->cek_tipe_user($this->uri->segment(3));
+            $tipe = $this->cek_tipe_user($this->uri->segment(3)); 
             $jumlah_awal = $this->jumlah_user();
             if($tipe[0]->tipe == "2"){
                 if($this->mod_user->delete_family($tipe[0]->API_KEY)){

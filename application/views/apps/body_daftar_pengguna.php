@@ -89,7 +89,14 @@
                     var response_data;
 
                     $.ajax({
+                        <?php 
+                        if($this->session->userdata("session_appssystem_tipe_user") == "1"){
+                        ?>
                         url : '<?php echo site_url(); ?>/api/load_all_user/' ,
+                        <?php }else
+                        if($this->session->userdata("session_appssystem_tipe_user") == "2" || $this->session->userdata("session_appssystem_tipe_user") == "3"){ ?>
+                            url : '<?php echo site_url(); ?>/api/load_all_family/<?php echo $this->session->userdata("session_appssystem_api_key"); ?>/' ,
+                        <?php } ?>
                         type : 'GET',
                         dataType : 'json',
                         success : function(response){
@@ -157,9 +164,9 @@
                             }
                             daftar_pengguna += '<td><span class="badge badge-large badge-'+severity+'">'+datas.response[x].status_user+'</span></td>';
                             daftar_pengguna += '<td>';
-                            daftar_pengguna += '<a href="<?php echo site_url() ?>/keamananrumah/daftar_pengguna/edit/'+datas.response[x].id+'"><button class="btn btn-xs" type="button" id="btn_edit"><span class="glyphicon glyphicon-pencil"></span></button></a>';
+                            daftar_pengguna += '<?php if($this->session->userdata("session_appssystem_tipe_user") == "1" || $this->session->userdata("session_appssystem_tipe_user") == "2"){ ?><a href="<?php echo site_url() ?>/keamananrumah/daftar_pengguna/edit/'+datas.response[x].id+'"><button class="btn btn-xs" type="button" id="btn_edit"><span class="glyphicon glyphicon-pencil"></span></button></a><?php } ?>';
                             daftar_pengguna += '<a href="<?php echo site_url() ?>/keamananrumah/daftar_pengguna/view/'+datas.response[x].id+'"><button class="btn btn-xs btn-primary" type="button" id="btn_view"><span class="glyphicon glyphicon-eye-open"></span></button></a>';
-                            daftar_pengguna += '<a href="<?php echo site_url() ?>/keamananrumah/daftar_pengguna/delete/'+datas.response[x].id+'"><button class="btn btn-xs btn-danger" type="button" ><span class="glyphicon glyphicon-trash"></span></button></a>';
+                            daftar_pengguna += '<?php if($this->session->userdata("session_appssystem_tipe_user") == "1" || $this->session->userdata("session_appssystem_tipe_user") == "2"){ ?><a href="<?php echo site_url() ?>/keamananrumah/daftar_pengguna/delete/'+datas.response[x].id+'"><button class="btn btn-xs btn-danger" type="button" ><span class="glyphicon glyphicon-trash"></span></button></a><?php } ?>';
                             daftar_pengguna += '</td>';
                             daftar_pengguna += '</tr>';
                             ctr++;

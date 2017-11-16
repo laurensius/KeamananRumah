@@ -17,7 +17,7 @@
                                 <span id="notif"></span>
                             </div>
                             <div class="col-lg-12">
-                                <div class="portlet box blue-madison">
+                                <div class="portlet box blue-chambray">
                                     <div class="portlet-title">
                                         <div class="caption">
                                             <i class="fa fa-key"></i>Form Ubah Password</div>
