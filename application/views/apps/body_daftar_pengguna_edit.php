@@ -1,3 +1,10 @@
+                <?php
+                if($this->session->userdata("session_appssystem_tipe_user") == "2" || $this->session->userdata("session_appssystem_tipe_user") == "3"){
+                    $disabled = "disabled";
+                }else{
+                    $disabled = "";
+                }
+                ?>
                 <div class="page-content-wrapper">
                     <div class="page-content">
                         <div class="page-bar">
@@ -75,7 +82,7 @@
                                                         <div class="col-md-9">
                                                             <!-- <input type="text" class="form-control" placeholder="Status Account" id="status" disabled> -->
                                                             <!-- <span class="help-block"> A block of help text. </span> -->
-                                                            <select id="status" class="form-control">
+                                                            <select id="status" class="form-control" <?php echo $disabled ?>>
                                                             </select>
                                                         </div>
                                                     </div>
