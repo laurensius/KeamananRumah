@@ -14,9 +14,14 @@ class Mod_device extends CI_Model{
         return $result->result();
     }
 
-
     function itung_rows(){
         $result = $this->db->query("select count(*) as jumlah from t_sensor");
         return $result->result();
+    }
+
+    function summary_database_all(){
+        $query_str = "SELECT count(id) as jumlah_record_total, (select count(*) from t_sensor where datetime like '".date("Y-m-d")."%') as jumlah_record_today  FROM t_sensor";
+        $query = $this->db->query($query_str);
+        return $query->result();
     }
 }

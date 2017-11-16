@@ -179,4 +179,10 @@ class Mod_user extends CI_Model{
         $query = $this->db->query($query_str);
         return $query->result();
     }
+
+    function summary_pengguna_all(){
+        $query_str = "SELECT count(id) as jumlah_user_total, (select count(*) from t_user where status='2') as jumlah_user_blocked  FROM t_user where id <> '1'";
+        $query = $this->db->query($query_str);
+        return $query->result();
+    }
 }

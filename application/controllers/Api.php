@@ -417,4 +417,30 @@ class Api extends CI_Controller {
         $return = $this->mod_device->recent($this->uri->segment(3));
         echo json_encode(array("response"=>$return),JSON_PRETTY_PRINT);
     }
+
+    function dashboard(){
+        if($this->uri->segment(3) == null ){
+            //admin mode
+            $return = array(
+                "user" => $this->summary_pengguna_all(),
+                "database" => $this->summary_database_all() 
+            );
+        }else{
+            //non-admin mode
+            
+            
+        }
+        echo json_encode(array("response"=>$return),JSON_PRETTY_PRINT);
+    }
+
+    function summary_pengguna_all(){
+        return $this->mod_user->summary_pengguna_all();
+    }
+
+    function summary_database_all(){
+        return $this->mod_device->summary_database_all() ;
+    }
+
+   
+
 }

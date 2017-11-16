@@ -20,9 +20,9 @@
                                     </div>
                                     <div class="details">
                                         <div class="number">
-                                            <span data-counter="counterup">10</span>
+                                            <span data-counter="counterup"><span id="total_pengguna">0</span></span>
                                         </div>
-                                        <div class="desc"> Pengguna Aktif </div>
+                                        <div class="desc"> Total Pengguna </div>
                                     </div>
                                 </a>
                             </div>
@@ -33,7 +33,7 @@
                                     </div>
                                     <div class="details">
                                         <div class="number">
-                                            <span data-counter="counterup">0</span>
+                                            <span data-counter="counterup"><span id="pengguna_diblock">0</span></span>
                                         </div>
                                         <div class="desc"> Pengguna Diblock </div>
                                     </div>
@@ -46,7 +46,7 @@
                                     </div>
                                     <div class="details">
                                         <div class="number">
-                                            <span data-counter="counterup">999</span>
+                                            <span data-counter="counterup"><span id="record_hari_ini">0</span></span>
                                         </div>
                                         <div class="desc"> Record Hari Ini </div>
                                     </div>
@@ -59,7 +59,7 @@
                                     </div>
                                     <div class="details">
                                         <div class="number">
-                                            <span data-counter="counterup">9999</span>
+                                            <span data-counter="counterup"><span id="total_record">0</span></span>
                                         </div>
                                         <div class="desc"> Record Total </div>
                                     </div>
@@ -94,6 +94,29 @@
                         <div>
                     </div>
                 </div>
+                <script type="text/javascript">
+                var notif = "";
+                $(document).ready(function(){
+                    function load_data(){
+                        $.ajax({
+                            url : '<?php echo site_url(); ?>/api/dashboard/' ,
+                            type : 'GET',
+                            dataType : 'json',
+                            success : function(response){
+                                console.log(response);
+                                $("#total_pengguna").html(response.response.user[0].jumlah_user_total);
+                                $("#pengguna_diblock").html(response.response.user[0].jumlah_user_blocked);
+                                $("#record_hari_ini").html(response.response.database[0].jumlah_record_today);
+                                $("#total_record").html(response.response.database[0].jumlah_record_total);
+                            },
+                            error : function(response){
+                                
+                            },
+                        });
+                    }
+                    setInterval(function(){load_data();},1000);
+                });
+                </script>
 				
                 
             
