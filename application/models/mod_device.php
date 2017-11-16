@@ -24,4 +24,10 @@ class Mod_device extends CI_Model{
         $query = $this->db->query($query_str);
         return $query->result();
     }
+
+    function summary_database_by_api($API_KEY){
+        $query_str = "SELECT count(id) as jumlah_record_total, (select count(*) from t_sensor where datetime like '".date("Y-m-d")."%' and  API_KEY='".$API_KEY."') as jumlah_record_today  FROM t_sensor where API_KEY='".$API_KEY."'";
+        $query = $this->db->query($query_str);
+        return $query->result();
+    }
 }

@@ -185,4 +185,10 @@ class Mod_user extends CI_Model{
         $query = $this->db->query($query_str);
         return $query->result();
     }
+
+    function summary_pengguna_by_api($API_KEY){
+        $query_str = "SELECT count(id) as jumlah_user_total, (select count(*) from t_user where status='2' and API_KEY='".$API_KEY."') as jumlah_user_blocked  FROM t_user where API_KEY='".$API_KEY."'";
+        $query = $this->db->query($query_str);
+        return $query->result();
+    }
 }

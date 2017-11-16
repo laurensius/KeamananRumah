@@ -99,7 +99,14 @@
                 $(document).ready(function(){
                     function load_data(){
                         $.ajax({
+                            <?php 
+                            if($this->session->userdata("session_appssystem_tipe_user") == "1"){
+                            ?>
                             url : '<?php echo site_url(); ?>/api/dashboard/' ,
+                            <?php }else
+                            if($this->session->userdata("session_appssystem_tipe_user") == "2" || $this->session->userdata("session_appssystem_tipe_user") == "3"){ ?>    
+                            url : '<?php echo site_url(); ?>/api/dashboard/<?php echo $this->session->userdata("session_appssystem_api_key"); ?>/',
+                            <?php } ?>
                             type : 'GET',
                             dataType : 'json',
                             success : function(response){

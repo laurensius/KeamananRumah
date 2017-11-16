@@ -427,8 +427,10 @@ class Api extends CI_Controller {
             );
         }else{
             //non-admin mode
-            
-            
+            $return = array(
+                "user" => $this->summary_pengguna_by_api($this->uri->segment(3)),
+                "database" => $this->summary_database_by_api($this->uri->segment(3)) 
+            );
         }
         echo json_encode(array("response"=>$return),JSON_PRETTY_PRINT);
     }
@@ -439,6 +441,14 @@ class Api extends CI_Controller {
 
     function summary_database_all(){
         return $this->mod_device->summary_database_all() ;
+    }
+
+    function summary_pengguna_by_api($API_KEY){
+        return $this->mod_user->summary_pengguna_by_api($API_KEY);
+    }
+
+    function summary_database_by_api($API_KEY){
+        return $this->mod_device->summary_database_by_api($API_KEY);
     }
 
    
