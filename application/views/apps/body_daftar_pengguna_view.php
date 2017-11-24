@@ -86,7 +86,7 @@
                                                     </div>
                                                 </form>
                                                 <div class="col-lg-12">
-                                                    <?php if($this->session->userdata("session_appssystem_tipe_user") == "1" || $this->session->userdata("session_appssystem_tipe_user") == "2"){ ?>
+                                                    <?php if(($this->session->userdata("session_appssystem_tipe_user") == "1" || $this->session->userdata("session_appssystem_tipe_user") == "2") && $this->uri->segment(4) != $this->session->userdata("session_appssystem_id")){ ?>
                                                     <a href="<?php echo site_url() ?>/keamananrumah/daftar_pengguna/delete/<?php echo $this->uri->segment(4); ?>/">
                                                         <button class="btn btn-danger pull-right" style="margin-right:10px;">Hapus</button>
                                                     </a>

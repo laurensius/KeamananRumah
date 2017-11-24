@@ -102,7 +102,7 @@ class Api extends CI_Controller {
                 "alamat" => $alamat);
             $resultcek = $this->mod_user->verifikasi_daftar($data);
             if($resultcek==null){
-                if($this->session->userdata("session_appssystem_tipe_user") == 1){
+                if($this->session->userdata("session_appssystem_tipe_user") == 1 || $this->uri->segment(3) == "1"){
                     $tipe = $this->input->post('tipe_user');
                     $parent = $this->input->post('parent');
                     if($tipe == 2){
@@ -116,11 +116,11 @@ class Api extends CI_Controller {
                         $secure_key =$securekey[0]->secure_key;   
                     }
                 }else
-                if($this->session->userdata("session_appssystem_tipe_user") == 2){
+                if($this->session->userdata("session_appssystem_tipe_user") == 2 || $this->uri->segment(3) == "2"){
                     $tipe = "3";
-                    $parent = $this->session->userdata("session_appssystem_id");
-                    $API_KEY = $this->session->userdata("session_appssystem_api_key");
-                    $secure_key = $this->session->userdata("session_appssystem_secure_key");
+                    $parent = $this->input->post("parent");
+                    $API_KEY = $this->input->post("API_KEY");
+                    $secure_key = $this->input->post("secure_key");
                 }else
                 if($this->session->userdata("session_appssystem_tipe_user") == "" || $this->session->userdata("session_appssystem_tipe_user") == null ){
                     $tipe = "2";
@@ -328,7 +328,7 @@ class Api extends CI_Controller {
 		if($this->uri->segment(3) != null || $this->uri->segment(3) != ""){
 			$result = $this->mod_user->load_detail_user($this->uri->segment(3));
 			$data = array("response" => $result);
-			echo json_encode($data);
+			echo json_encode($data,JSON_PRETTY_PRINT);
 		}else{
 			echo "HTTP GET User Error, Pastikan anda kirim ID";
 		}
@@ -336,7 +336,7 @@ class Api extends CI_Controller {
 
     function load_all_parent(){
         $return = $this->mod_user->load_all_parent();
-        echo json_encode(array("response"=>$return));
+        echo json_encode(array("response"=>$return),JSON_PRETTY_PRINT);
     }
 
     function load_all_user(){
