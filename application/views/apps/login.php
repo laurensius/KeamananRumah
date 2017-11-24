@@ -122,11 +122,7 @@
                         alert("Terjadi kesalahan pada saat login. Silahkan coba lagi.");
                     },
                 });
-            }
-
-            
-
-            
+            }            
         }
         </script>
         <!--[if lt IE 9]>

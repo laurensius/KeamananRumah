@@ -30,4 +30,10 @@ class Mod_device extends CI_Model{
         $query = $this->db->query($query_str);
         return $query->result();
     }
+
+    function total_perangkat_aktif(){
+        $query_str = "SELECT count(distinct(api_key)) as jumlah_perangkat_aktif from t_sensor ";
+        $query = $this->db->query($query_str);
+        return $query->result();
+    }
 }
