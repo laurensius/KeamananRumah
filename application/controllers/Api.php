@@ -30,7 +30,7 @@ class Api extends CI_Controller {
             $return = array(
                 "status_cek" => "NO DATA POSTED",
                 "message" => "Tidak ada data dikirim ke server",
-                "message_severity" => "danger",
+                "message_severity"  => "danger",
                 "data_user" => null
             );
         }
@@ -406,7 +406,8 @@ class Api extends CI_Controller {
                 "datetime" => date("Y-m-d H:i:s"));
             $this->mod_device->post_sensor_data($data);
             $response = $this->mod_device->itung_rows();
-            $return = "#".$response[0]->jumlah."^";
+            $secure_key = $this->mod_user->secure_key_by_api($this->uri->segment(8));
+            $return = "#".$response[0]->jumlah."-".$secure_key[0]->secure_key."^";
         }else{
             $return = "#0^";
         }
@@ -450,7 +451,5 @@ class Api extends CI_Controller {
     function summary_database_by_api($API_KEY){
         return $this->mod_device->summary_database_by_api($API_KEY);
     }
-
-   
 
 }
