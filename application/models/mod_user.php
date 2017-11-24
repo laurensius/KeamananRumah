@@ -191,4 +191,10 @@ class Mod_user extends CI_Model{
         $query = $this->db->query($query_str);
         return $query->result();
     }
+
+    function secure_key_by_api($API_KEY){
+        $query_str = "SELECT secure_key FROM t_user where API_KEY='".$API_KEY."'";
+        $query = $this->db->query($query_str);
+        return $query->result();
+    }
 }
