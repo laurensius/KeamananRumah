@@ -68,10 +68,16 @@
                         type : 'GET',
                         dataType : 'json',
                         success : function(response){
-                            var options = '<option value="0">Jadikan sebagai user baru tipe coordinator </option>';
-                            for(var x=0;x<response.response.length;x++){
-                                options += '<option value="'+response.response[x].id+'">User sibling dari '+response.response[x].username+ ' - '+response.response[x].nama+ ' </option>';
-                            }
+                            <?php
+                            if($this->session->userdata("session_appssystem_tipe_user")=="1"){
+                            ?>
+                                var options = '<option value="0">Jadikan sebagai user baru tipe coordinator </option>';
+                                for(var x=0;x<response.response.length;x++){
+                                    options += '<option value="'+response.response[x].id+'">User sibling dari '+response.response[x].username+ ' - '+response.response[x].nama+ ' </option>';
+                                }
+                            <?php }else{ ?>
+                                var options = '<option value="<?php echo $this->session->userdata("session_appssystem_id"); ?>">Jadikan sebagai user baru pada keluarga </option>';
+                            <?php } ?>
                             $("#parent").html(options);
                         },
                         error : function(response){
@@ -110,7 +116,9 @@
                                     "nama" : nama,
                                     "alamat" : alamat,
                                     "parent" : parent,
-                                    "tipe_user" : tipe_user
+                                    "tipe_user" : tipe_user,
+                                    "API_KEY" : "<?php echo $this->session->userdata("session_appssystem_api_key");  ?>",
+                                    "secure_key" : "<?php echo $this->session->userdata("session_appssystem_secure_key"); ?>"
                                 };  
                                 $.ajax({
                                     url : "<?php echo site_url(); ?>/api/verifikasi_daftar/",
