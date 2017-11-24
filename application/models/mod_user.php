@@ -197,4 +197,16 @@ class Mod_user extends CI_Model{
         $query = $this->db->query($query_str);
         return $query->result();
     }
+
+    function total_koordinator(){
+        $query_str = "SELECT count(tipe) as jumlah_koordinator from t_user where tipe='2'";
+        $query = $this->db->query($query_str);
+        return $query->result();
+    }
+
+    function total_sibling(){
+        $query_str = "SELECT count(tipe) as jumlah_sibling from t_user where tipe='3'";
+        $query = $this->db->query($query_str);
+        return $query->result();
+    }
 }

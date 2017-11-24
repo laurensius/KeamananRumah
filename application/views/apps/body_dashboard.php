@@ -141,6 +141,9 @@
                                 $("#pengguna_diblock").html(response.response.user[0].jumlah_user_blocked);
                                 $("#record_hari_ini").html(response.response.database[0].jumlah_record_today);
                                 $("#total_record").html(response.response.database[0].jumlah_record_total);
+                                $("#total_coordinator").html(response.response.jumlah_koordinator[0].jumlah_koordinator);
+                                $("#total_sibling").html(response.response.jumlah_sibling[0].jumlah_sibling);
+                                $("#total_perangkat_aktif").html(response.response.total_perangkat_aktif[0].jumlah_perangkat_aktif);
                             },
                             error : function(response){
                                 

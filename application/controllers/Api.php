@@ -424,7 +424,10 @@ class Api extends CI_Controller {
             //admin mode
             $return = array(
                 "user" => $this->summary_pengguna_all(),
-                "database" => $this->summary_database_all() 
+                "database" => $this->summary_database_all(),
+                "jumlah_koordinator" => $this->total_koordinator(), 
+                "jumlah_sibling" => $this->total_sibling(),
+                "total_perangkat_aktif" => $this->total_perangkat_aktif(),
             );
         }else{
             //non-admin mode
@@ -450,6 +453,18 @@ class Api extends CI_Controller {
 
     function summary_database_by_api($API_KEY){
         return $this->mod_device->summary_database_by_api($API_KEY);
+    }
+
+    function total_koordinator(){
+        return $this->mod_user->total_koordinator();
+    }
+
+    function total_sibling(){
+        return $this->mod_user->total_sibling();
+    }
+
+    function total_perangkat_aktif(){
+        return $this->mod_device->total_perangkat_aktif();
     }
 
 }
