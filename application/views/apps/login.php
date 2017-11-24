@@ -79,7 +79,7 @@
                             </div>
                             <div class="col-xs-7 bs-reset">
                                 <div class="login-copyright text-right">
-                                    <p>Copyright &copy; Erwin Ligar Nugraha</p>
+                                    <p>Copyright &copy; Laurensius Dede Suhardiman</p>
                                 </div>
                             </div>
                         </div>
