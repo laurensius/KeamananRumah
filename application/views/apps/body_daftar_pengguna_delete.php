@@ -138,7 +138,7 @@
                                 notif += '<div class="alert alert-success alert-dismissable">';
                                 notif += 'Hapus pengguna berhasil.';
                                 notif += '<span class="right">';
-                                notif += '<a href="<?php echo site_url(); ?>/keamananrumah/daftar_pengguna/"> <button class="btn"> Tidak!</button></a>';
+                                notif += '<a href="<?php echo site_url(); ?>/keamananrumah/daftar_pengguna/"> <button class="btn"> Kembali</button></a>';
                                 notif += '</span>';
                                 notif += '</div>';
                                 document.getElementById('notif').innerHTML = notif;

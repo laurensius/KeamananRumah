@@ -16,25 +16,7 @@
                             <div class="col-lg-12">
                                 <span id="notif"></span>
                             </div>
-                            <div class="col-lg-3">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <center>
-                                            <img class="img img-responsive img-circle" src="<?php echo base_url() ?>assets/img/bg1.jpg" />
-                                            <div class="input-group">
-                                                <input id="newpassword" class="form-control" type="file" name="password" placeholder="password"> 
-                                                <span class="input-group-btn">
-                                                    <button id="genpassword" class="btn btn-success" type="submit">
-                                                         Upload
-                                                    </button>
-                                                </span>
-                                            </div>
-                                        </center>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-9">
-                                
+                            <div class="col-lg-12">
                                 <div class="portlet box blue-chambray">
                                     <div class="portlet-title">
                                         <div class="caption">
