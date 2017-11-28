@@ -132,12 +132,22 @@
                                             <span class="title">Monitoring</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item start ">
+                                    <!--<li class="nav-item start "> 
                                         <a href="<?php echo site_url(); ?>/keamananrumah/laporan/" class="nav-link ">
                                             <i class="icon-layers"></i>
                                             <span class="title">Laporan</span>
                                         </a>
+                                    </li> -->
+                                    <?php
+                                    if($this->session->userdata("session_appssystem_tipe_user") == "2" || $this->session->userdata("session_appssystem_tipe_user") == "3"){
+                                    ?>    
+                                    <li class="nav-item start ">
+                                        <a href="<?php echo site_url(); ?>/keamananrumah/kelola_perangkat/" class="nav-link ">
+                                            <i class="icon-layers"></i>
+                                            <span class="title">Kelola Perangkat</span>
+                                        </a>
                                     </li>
+                                    <?php } ?>
                                 </ul>
                             </li>
 							

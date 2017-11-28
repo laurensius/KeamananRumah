@@ -36,4 +36,15 @@ class Mod_device extends CI_Model{
         $query = $this->db->query($query_str);
         return $query->result();
     }
+
+    function change_device_status($API_KEY,$data){
+        $this->db->where('API_KEY', $API_KEY);
+        $this->db->update('t_status_monitoring', $data);  
+    }
+
+    function status_perangkat_by_api($API_KEY){
+        $query_str = "SELECT * from t_status_monitoring where API_KEY='".$API_KEY."'";
+        $query = $this->db->query($query_str);
+        return $query->result();   
+    }
 }
