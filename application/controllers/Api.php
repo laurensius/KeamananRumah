@@ -404,10 +404,16 @@ class Api extends CI_Controller {
                 "magnetic" => $this->uri->segment(7),
                 "API_KEY" => $this->uri->segment(8),
                 "datetime" => date("Y-m-d H:i:s"));
-            $this->mod_device->post_sensor_data($data);
+            $status_perangkat = $this->mod_device->status_perangkat_by_api($this->uri->segment(8));     
+            if($status_perangkat[0]->status == "1"){
+                $this->mod_device->post_sensor_data($data); 
+                $perangkat = "KONDISI ON";   
+            }else{
+                $perangkat = "KONDISI OFF";
+            }
             $response = $this->mod_device->itung_rows();
             $secure_key = $this->mod_user->secure_key_by_api($this->uri->segment(8));
-            $return = "#".$response[0]->jumlah."-".$secure_key[0]->secure_key."^";
+            $return = "#".$response[0]->jumlah."-".$secure_key[0]->secure_key."-".$perangkat."^";
         }else{
             $return = "#0^";
         }
@@ -465,6 +471,25 @@ class Api extends CI_Controller {
 
     function total_perangkat_aktif(){
         return $this->mod_device->total_perangkat_aktif();
+    }
+
+    function change_device_status(){
+        if($this->uri->segment(3) != null && $this->uri->segment(4) != null && $this->uri->segment(5) != null){
+            $data = array(
+                "status" => $this->uri->segment(3),
+                "datetime" => date("Y-m-d H:i:s"), 
+                "user" => $this->uri->segment(5));
+            $result = $this->mod_device->change_device_status($this->uri->segment(4),$data);
+        }
+    }
+
+    function status_perangkat_by_api(){
+        if($this->uri->segment(3) != null){
+            $return = $this->mod_device->status_perangkat_by_api($this->uri->segment(3));
+        }else{
+            $return = array(null);
+        }
+        echo json_encode(array("response"=>$return),JSON_PRETTY_PRINT);
     }
 
 }
