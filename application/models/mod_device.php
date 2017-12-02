@@ -9,7 +9,25 @@ class Mod_device extends CI_Model{
 
 
     function recent($API_KEY){
-        $query_str = "Select * from t_sensor where API_KEY='".$API_KEY."' order by id desc limit 1";
+        $query_str = "Select 
+            t_sensor.id,  
+            t_sensor.state, 
+            t_sensor.outdoor, 
+            t_sensor.indoor, 
+            t_sensor.ussrf, 
+            t_sensor.magnetic, 
+            t_sensor.datetime,  
+            t_sensor.API_KEY, 
+            t_status_monitoring.status as status_perangkat, 
+            t_status_monitoring.datetime as datetime_perangkat, 
+            t_status_monitoring.user as pengubah_status_perangkat 
+            from 
+            t_sensor 
+            inner join 
+            t_status_monitoring
+            on 
+            t_sensor.API_KEY = t_status_monitoring.API_KEY 
+            and t_sensor.API_KEY='".$API_KEY."' order by t_sensor.id desc limit 1";
         $result = $this->db->query($query_str);
         return $result->result();
     }

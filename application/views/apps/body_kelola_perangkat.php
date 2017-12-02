@@ -47,8 +47,8 @@
                 var notif = "";
                 // var btn_on = '<a onClick="changeState(2);"><img src="<?php echo base_url(); ?>assets/img/png_on.png"></a>';
                 // var btn_off = '<a onClick="changeState(1);"><img src="<?php echo base_url(); ?>assets/img/png_off.png"></a>';
-                var btn_on = '<button class="btn btn-primary" onClick="changeState(2);">LAMPU ON KLIK UNTUK MEMATIKAN</button>';
-                var btn_off = '<button class="btn btn-danger" onClick="changeState(1);">LAMPU OFF KLIK UNTUK MENYALAKAN</button>';
+                var btn_on = '<button class="btn btn-primary" onClick="changeState(2);">MONITORING ON KLIK UNTUK MEMATIKAN</button>';
+                var btn_off = '<button class="btn btn-danger" onClick="changeState(1);">MONITORING OFF KLIK UNTUK MENYALAKAN</button>';
                 $(document).ready(function(){
                     function load_recent(){
                         $.ajax({
