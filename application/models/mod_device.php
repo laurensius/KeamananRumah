@@ -7,7 +7,6 @@ class Mod_device extends CI_Model{
         return $this->db->affected_rows();
     }
 
-
     function recent($API_KEY){
         $query_str = "Select 
             t_sensor.id,  

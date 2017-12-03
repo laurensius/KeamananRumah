@@ -117,6 +117,12 @@
                                             <span class="title">Daftar Pengguna</span>
                                         </a>
                                     </li>
+                                    <li class="nav-item start">
+                                        <a href="<?php echo site_url(); ?>/keamananrumah/request_open_block/" class="nav-link ">
+                                            <i class="icon-plus"></i>
+                                            <span class="title">Request Open Blokir</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                             <li class="nav-item start">

@@ -94,6 +94,22 @@ class Keamananrumah extends CI_Controller {
             $this->load->view("apps/login");
         }
     }
+
+    public function request_open_block(){
+        if($this->session->userdata("session_appssystem_code")){
+            $this->load->view("apps/header");
+            if($this->session->userdata('session_appssystem_id') == "1"){
+                $this->load->view("apps/body_approve_open_block");
+            }else{
+                $this->load->view("apps/body_request_open_block");
+            }
+            
+            $this->load->view("apps/footer");
+        }else{
+            $this->load->view("apps/login");
+        }
+    }
+
     //------------------------------END OF MENU KELOLA PENGGUNA--------------------------------------
 
     //------------------------------MONITORING--------------------------------------
