@@ -390,7 +390,6 @@ class Api extends CI_Controller {
     }
 
 
-
     //-------------------------------- DEVICE -------------------------------------------------
     //                                           1          2         3      4      5      6
     // http://localhost/keamananrumah/index.php/api/post_sensor_data/state/outdoor/indoor/ussrf/
