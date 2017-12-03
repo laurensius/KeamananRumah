@@ -66,6 +66,12 @@ class Mod_user extends CI_Model{
         return $this->db->affected_rows();
     }
 
+    function do_approve($id,$data){
+        $this->db->where('id',$id);
+        $this->db->update('t_request_open',$data);
+        return $this->db->affected_rows();
+    }
+
     function cek_password($id,$data){
         $query = "select count(t_user.password) as jumlah from t_user where id='".$id."' and password='".$data["password"]."'";
         $result = $this->db->query($query);
@@ -133,7 +139,6 @@ class Mod_user extends CI_Model{
         return $result->result();
     }
 
-
     function load_detail_user($id){
         $query_str = "select t_user.*, "
         ."t_ref_tipe_user.tipe as tipe_user, "
@@ -150,7 +155,6 @@ class Mod_user extends CI_Model{
         $query = $this->db->query($query_str);
         return $query->result();
     }
-
 
     function get_tipe_user($id){
         $query_str = "Select tipe,API_KEY from t_user where id='".$id."'";
@@ -209,4 +213,40 @@ class Mod_user extends CI_Model{
         $query = $this->db->query($query_str);
         return $query->result();
     }
+
+    function request_buka_block(){
+        $query_str = "SELECT count(status) as request_buka_block from t_request_open where status='1'";
+        $query = $this->db->query($query_str);
+        return $query->result();
+    }
+
+    function load_blocked_user_by_api_key($API_KEY){
+        $query_str = "SELECT "
+        ."t_user.id, " 
+        ."t_user.username, "
+        ."t_ref_tipe_user.tipe as tipe, "
+        ."(select t_request_open.status from t_request_open, t_user "
+        ."where t_request_open.user_blocked = t_user.id order by t_request_open.id desc limit 1) as status, "
+        ."(select count(t_request_open.user_blocked) from t_request_open, t_user "
+        ."where t_request_open.user_blocked = t_user.id and t_request_open.status='1') as jumlah "
+        ."from t_user "
+        ."inner join t_ref_tipe_user "
+        ."on t_user.tipe = t_ref_tipe_user.id "
+        ."and t_user.status='2' and t_user.API_KEY='".$API_KEY."' "
+        ."";
+        $query = $this->db->query($query_str);
+        return $query->result();
+    }
+
+    function request_open_block($data){
+        $this->db->insert('t_request_open',$data);
+        return $this->db->affected_rows();
+    }
+
+    function load_request_block(){
+        $query_str = "select t_request_open.id, t_request_open.user_blocked, t_user.username, t_user.tipe as tp, (Select t_ref_tipe_user.tipe from t_user,t_ref_tipe_user where t_ref_tipe_user.id = tp limit 1) as tipe from t_request_open INNER JOIN t_user on t_request_open.user_blocked = t_user.id and t_request_open.status = '1'";
+        $query = $this->db->query($query_str);
+        return $query->result();
+    }
+
 }

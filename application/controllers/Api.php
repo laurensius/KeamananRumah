@@ -432,6 +432,7 @@ class Api extends CI_Controller {
                 "user" => $this->summary_pengguna_all(),
                 "database" => $this->summary_database_all(),
                 "jumlah_koordinator" => $this->total_koordinator(), 
+                "request_buka_block" => $this->request_buka_block(), 
                 "jumlah_sibling" => $this->total_sibling(),
                 "total_perangkat_aktif" => $this->total_perangkat_aktif(),
             );
@@ -473,6 +474,10 @@ class Api extends CI_Controller {
         return $this->mod_device->total_perangkat_aktif();
     }
 
+    function request_buka_block(){
+        return $this->mod_user->request_buka_block();
+    }
+
     function change_device_status(){
         if($this->uri->segment(3) != null && $this->uri->segment(4) != null && $this->uri->segment(5) != null){
             $data = array(
@@ -490,6 +495,82 @@ class Api extends CI_Controller {
             $return = array(null);
         }
         echo json_encode(array("response"=>$return),JSON_PRETTY_PRINT);
+    }
+
+    function load_blocked_user_by_api_key(){
+        if($this->uri->segment(3) != null){
+            $return = $this->mod_user->load_blocked_user_by_api_key($this->uri->segment(3));
+        }else{
+            $return = array(null);
+        }
+        echo json_encode(array("response"=>$return),JSON_PRETTY_PRINT);
+    }
+
+    function load_request_block(){
+        $return = $this->mod_user->load_request_block();
+        echo json_encode(array("response"=>$return),JSON_PRETTY_PRINT);
+    }
+
+    function request_open_block(){
+        if($this->input->post('user_blocked') != null && $this->input->post('user_request') != null && $this->input->post('status') != null){
+            $data = array(
+                "user_blocked" => $this->input->post('user_blocked'),
+                "user_request" => $this->input->post('user_request'),
+                "datetime_request" => date("Y-m-d H:i:s"),
+                "status" => $this->input->post('status')
+            );
+            $resultcek = $this->mod_user->request_open_block($data);
+            if($resultcek > 0){
+                $return = array(
+                    "status_cek" => "SUCCESS",
+                    "message" => "Request open block berhasil",
+                    "message_severity" => "success",
+                    "data_user" => null);    
+            }else{
+                $return = array(
+                    "status_cek" => "FAILED",
+                    "message" => "Update gagal. Request open block gagal.",
+                    "message_severity" => "warning",
+                    "data_user" => null);  
+            }
+        }else{
+            $return = array(
+                "status_cek" => "NO DATA POSTED",
+                "message" => "Tidak ada data dikirim ke server!",
+                "message_severity" => "danger",
+                "data_user" => null
+            );
+        }
+        echo json_encode(array("response"=>$return));
+    }
+
+    function do_approve(){
+        if($this->input->post('id_request') != null && $this->input->post('id_user') != null ){
+            $approve = $this->mod_user->do_approve($this->input->post('id_request'),array("status"=>"2"));
+            $update = $this->mod_user->update_pengguna($this->input->post('id_user'),array("status"=>"1"));
+            if($approve > 0 && $update > 0){
+                $return = array(
+                    "status_cek" => "SUCCESS",
+                    "message" => "Approve open block berhasil",
+                    "message_severity" => "success",
+                    "data_user" => null);    
+            }else{
+                $return = array(
+                    "status_cek" => "FAILED",
+                    "message" => "Update gagal. Approve open block gagal.",
+                    "message_severity" => "warning",
+                    "data_user" => null);  
+            }
+
+        }else{
+            $return = array(
+                "status_cek" => "NO DATA POSTED",
+                "message" => "Tidak ada data dikirim ke server!",
+                "message_severity" => "danger",
+                "data_user" => null
+            );
+        }
+        echo json_encode(array("response"=>$return));
     }
 
 }
