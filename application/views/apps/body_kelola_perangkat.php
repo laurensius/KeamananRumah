@@ -45,8 +45,6 @@
                 </div>
                 <script type="text/javascript">
                 var notif = "";
-                // var btn_on = '<a onClick="changeState(2);"><img src="<?php echo base_url(); ?>assets/img/png_on.png"></a>';
-                // var btn_off = '<a onClick="changeState(1);"><img src="<?php echo base_url(); ?>assets/img/png_off.png"></a>';
                 var btn_on = '<button class="btn btn-primary" onClick="changeState(2);">MONITORING ON KLIK UNTUK MEMATIKAN</button>';
                 var btn_off = '<button class="btn btn-danger" onClick="changeState(1);">MONITORING OFF KLIK UNTUK MENYALAKAN</button>';
                 $(document).ready(function(){
@@ -79,7 +77,8 @@
                 });
 
                 function changeState(state){
-                    $.ajax({
+                    if (confirm('Apakah Anda yakin akan mengubah status perangkat (end device) ?')) {
+                        $.ajax({
                             url : '<?php echo site_url(); ?>/api/change_device_status/' + state + '/<?php echo $this->session->userdata("session_appssystem_api_key"); ?>/<?php echo $this->session->userdata("session_appssystem_id"); ?>/' ,
                             type : 'GET',
                             dataType : 'json',
@@ -89,6 +88,7 @@
                             error : function(response){
                             },
                         });
+                    }
                 }
                 </script>
 

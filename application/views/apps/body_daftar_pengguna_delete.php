@@ -19,13 +19,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <span id="notif">
-                                    <div class="alert alert-danger">
-                                        Apakah Anda yakin akan menghapus pengguna dengan data di bawah ini?
-                                        <span class="right">
-                                            <a href="<?php echo site_url(); ?>/keamananrumah/daftar_pengguna/"><button class="btn">Tidak!</button></a>
-                                            <button class="btn btn-danger" onclick="ya(<?php echo $this->uri->segment(4); ?>);">Ya!</button>
-                                        </span>
-                                    </div>
+
                                 </span>
                             </div>
                             <div class="col-lg-12" id="detail">
@@ -46,53 +40,49 @@
                                                     <div class="form-group">
                                                         <label class="col-md-3 control-label">Username </label>
                                                         <div class="col-md-9">
-                                                            <input type="text" class="form-control" placeholder="Username" id="username" disabled required>
-                                                            <!-- <span class="help-block"> A block of help text. </span> -->
+                                                            <input type="text" class="form-control" placeholder="Username" id="username" disabled required>    
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-md-3 control-label">Nama </label>
                                                         <div class="col-md-9">
-                                                            <input type="text" class="form-control" placeholder="Nama Lengkap Anda" id="nama" disabled required>
-                                                            <!-- <span class="help-block"> A block of help text. </span> -->
+                                                            <input type="text" class="form-control" placeholder="Nama Lengkap Anda" id="nama" disabled required>    
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-md-3 control-label">Alamat</label>
                                                         <div class="col-md-9">
-                                                            <textarea class="form-control" placeholder="Alamat tempat tinggal" id="alamat" disabled></textarea required>
-                                                            <!-- <span class="help-block"> A block of help text. </span> -->
+                                                            <textarea class="form-control" placeholder="Alamat tempat tinggal" id="alamat" disabled></textarea required>    
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-md-3 control-label">Tipe Account</label>
                                                         <div class="col-md-9">
                                                             <input type="text" class="form-control" placeholder="Tipe Account" id="tipe" disabled>
-                                                            <!-- <span class="help-block"> A block of help text. </span> -->
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-md-3 control-label">Tanggal Registrasi</label>
                                                         <div class="col-md-9">
-                                                            <input type="text" class="form-control" placeholder="Tanggal Registrasi" id="register_date" disabled>
-                                                            <!-- <span class="help-block"> A block of help text. </span> -->
+                                                            <input type="text" class="form-control" placeholder="Tanggal Registrasi" id="register_date" disabled>   
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-md-3 control-label">API Key</label>
                                                         <div class="col-md-9">
-                                                            <input type="text" class="form-control" placeholder="API Key" id="API_KEY" disabled>
-                                                            <!-- <span class="help-block"> A block of help text. </span> -->
+                                                            <input type="text" class="form-control" placeholder="API Key" id="API_KEY" disabled>  
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-md-3 control-label">Secure Key</label>
                                                         <div class="col-md-9">
-                                                            <input type="text" class="form-control" placeholder="Secure Key" id="secure_key" disabled>
-                                                            <!-- <span class="help-block"> A block of help text. </span> -->
+                                                            <input type="text" class="form-control" placeholder="Secure Key" id="secure_key" disabled> 
                                                         </div>
                                                     </div>
                                                 </form>
+                                                <div class="col-lg-12">
+                                                    <button class="btn btn-danger pull-right" onclick="ya(<?php echo $this->uri->segment(4); ?>);">Delete</button> 
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -128,31 +118,32 @@
                 });
 
                 function ya(id){
-                    $.ajax({
-                        url : '<?php echo site_url(); ?>/api/delete_user/<?php echo $this->uri->segment(4); ?>/' ,
-                        type : 'GET',
-                        dataType : 'json',
-                        success : function(response){
-                            console.log(response);
-                            if(response.response.affected_rows > 0){
-                                notif += '<div class="alert alert-success alert-dismissable">';
-                                notif += 'Hapus pengguna berhasil.';
-                                notif += '<span class="right">';
-                                notif += '<a href="<?php echo site_url(); ?>/keamananrumah/daftar_pengguna/"> <button class="btn"> Kembali</button></a>';
-                                notif += '</span>';
+                    if (confirm('Apakah Anda yakin akan menghapus pengguna tersebut ?')) {
+                        $.ajax({
+                            url : '<?php echo site_url(); ?>/api/delete_user/<?php echo $this->uri->segment(4); ?>/' ,
+                            type : 'GET',
+                            dataType : 'json',
+                            success : function(response){
+                                console.log(response);
+                                if(response.response.affected_rows > 0){
+                                    notif += '<div class="alert alert-success alert-dismissable">';
+                                    notif += 'Hapus pengguna berhasil.';
+                                    notif += '<span class="right">';
+                                    notif += '<a href="<?php echo site_url(); ?>/keamananrumah/daftar_pengguna/"> <button class="btn"> Kembali</button></a>';
+                                    notif += '</span>';
+                                    notif += '</div>';
+                                    document.getElementById('notif').innerHTML = notif;
+                                    document.getElementById('detail').innerHTML = '';
+                                } 
+                            },
+                            error : function(response){
+                                notif += '<div class="alert alert-danger alert-dismissable">';
+                                notif += 'Terjadi kesalahan pada saat proses hapus pengguna. Silahkan coba lagi (refresh browser Anda).';
                                 notif += '</div>';
                                 document.getElementById('notif').innerHTML = notif;
-                                document.getElementById('detail').innerHTML = '';
-                            }
-                            
-                        },
-                        error : function(response){
-                            notif += '<div class="alert alert-danger alert-dismissable">';
-                            notif += 'Terjadi kesalahan pada saat proses hapus pengguna. Silahkan coba lagi (refresh browser Anda).';
-                            notif += '</div>';
-                            document.getElementById('notif').innerHTML = notif;
-                        },
-                    });
+                            },
+                        });
+                    }  
                 }
                 </script>
                 

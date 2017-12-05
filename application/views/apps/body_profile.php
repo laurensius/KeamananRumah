@@ -23,10 +23,7 @@
                                             <i class="fa fa-gift"></i>Profile</div>
                                         <div class="tools">
                                             <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
-                                            <!-- <a href="#portlet-config" data-toggle="modal" class="config" data-original-title="" title=""> </a> -->
-                                            <!-- <a href="javascript:;" class="reload" data-original-title="" title=""> </a> -->
                                             <a href="" class="fullscreen" data-original-title="" title=""> </a>
-                                            <!-- <a href="javascript:;" class="remove" data-original-title="" title=""> </a> -->
                                         </div>
                                     </div>
                                     <div class="portlet-body" id="detail_user">
@@ -37,49 +34,42 @@
                                                         <label class="col-md-3 control-label">Username </label>
                                                         <div class="col-md-9">
                                                             <input type="text" class="form-control" placeholder="Username" id="username" disabled required>
-                                                            <!-- <span class="help-block"> A block of help text. </span> -->
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-md-3 control-label">Nama </label>
                                                         <div class="col-md-9">
                                                             <input type="text" class="form-control" placeholder="Nama Lengkap Anda" id="nama" <?php echo $disabled; ?> required>
-                                                            <!-- <span class="help-block"> A block of help text. </span> -->
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-md-3 control-label">Alamat</label>
                                                         <div class="col-md-9">
                                                             <textarea class="form-control" placeholder="Alamat tempat tinggal" id="alamat" <?php echo $disabled; ?>></textarea required>
-                                                            <!-- <span class="help-block"> A block of help text. </span> -->
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-md-3 control-label">Tipe Account</label>
                                                         <div class="col-md-9">
                                                             <input type="text" class="form-control" placeholder="Tipe Account" id="tipe" disabled>
-                                                            <!-- <span class="help-block"> A block of help text. </span> -->
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-md-3 control-label">Tanggal Registrasi</label>
                                                         <div class="col-md-9">
                                                             <input type="text" class="form-control" placeholder="Tanggal Registrasi" id="register_date" disabled>
-                                                            <!-- <span class="help-block"> A block of help text. </span> -->
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-md-3 control-label">API Key</label>
                                                         <div class="col-md-9">
                                                             <input type="text" class="form-control" placeholder="API Key" id="API_KEY" disabled>
-                                                            <!-- <span class="help-block"> A block of help text. </span> -->
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-md-3 control-label">Secure Key</label>
                                                         <div class="col-md-9">
                                                             <input type="text" class="form-control" placeholder="Secure Key" id="secure_key" disabled>
-                                                            <!-- <span class="help-block"> A block of help text. </span> -->
                                                         </div>
                                                     </div>
                                                 </form>
@@ -136,45 +126,47 @@
                     });
 
                     function update_profile(){
-                        var username = document.getElementById("username").value;
-                        var nama = document.getElementById("nama").value;
-                        var alamat = document.getElementById("alamat").value;
-                        if(username == "" || username == null  || nama == "" || nama == null || alamat == ""  || alamat == null  ){
-                            notif += '<div class="alert alert-warning alert-dismissable">';
-                            notif += 'Isi semua data dengan lengkap!'
-                            notif += '</div>';
-                            document.getElementById('notif').innerHTML = notif;
-                        }else{
-                            var post = {
-                                "username" : username,
-                                "nama" : nama,
-                                "alamat" : alamat
-                            }; 
-                            console.log(post);
-                            $.ajax({
-                                url : '<?php echo site_url(); ?>/api/update_detail_user/<?php echo $this->session->userdata("session_appssystem_id"); ?>/' ,
-                                type : 'POST',
-                                dataType : 'json',
-                                data : post,
-                                success : function(response){
-                                    console.log(response);
-                                    if(response.response.status_cek === 'FAILED' || response.response.status_cek === 'FOUND' || response.response.status_cek === 'NO DATA POSTED'){
-                                        notif += '<div class="alert alert-' + response.response.message_severity + ' alert-dismissable">';
-                                        notif += response.response.message;
+                        if (confirm('Apakah Anda yakin akan merubah profil Anda ?')) {
+                            var username = document.getElementById("username").value;
+                            var nama = document.getElementById("nama").value;
+                            var alamat = document.getElementById("alamat").value;
+                            if(username == "" || username == null  || nama == "" || nama == null || alamat == ""  || alamat == null  ){
+                                notif += '<div class="alert alert-warning alert-dismissable">';
+                                notif += 'Isi semua data dengan lengkap!'
+                                notif += '</div>';
+                                document.getElementById('notif').innerHTML = notif;
+                            }else{
+                                var post = {
+                                    "username" : username,
+                                    "nama" : nama,
+                                    "alamat" : alamat
+                                }; 
+                                console.log(post);
+                                $.ajax({
+                                    url : '<?php echo site_url(); ?>/api/update_detail_user/<?php echo $this->session->userdata("session_appssystem_id"); ?>/' ,
+                                    type : 'POST',
+                                    dataType : 'json',
+                                    data : post,
+                                    success : function(response){
+                                        console.log(response);
+                                        if(response.response.status_cek === 'FAILED' || response.response.status_cek === 'FOUND' || response.response.status_cek === 'NO DATA POSTED'){
+                                            notif += '<div class="alert alert-' + response.response.message_severity + ' alert-dismissable">';
+                                            notif += response.response.message;
+                                            notif += '</div>';
+                                            document.getElementById('notif').innerHTML = notif;
+                                        }else{
+                                            window.location = "<?php echo site_url(); ?>/keamananrumah/profile/";
+                                        }
+                                    },
+                                    error : function(response){
+                                        notif += '<div class="alert alert-danger alert-dismissable">';
+                                        notif += 'Terjadi kesalahan pada saat update detail profile. Silahkan coba lagi.';
                                         notif += '</div>';
                                         document.getElementById('notif').innerHTML = notif;
-                                    }else{
-                                        window.location = "<?php echo site_url(); ?>/keamananrumah/profile/";
-                                    }
-                                },
-                                error : function(response){
-                                    notif += '<div class="alert alert-danger alert-dismissable">';
-                                    notif += 'Terjadi kesalahan pada saat update detail profile. Silahkan coba lagi.';
-                                    notif += '</div>';
-                                    document.getElementById('notif').innerHTML = notif;
-                                },
-                            });
-                        }  
+                                    },
+                                });
+                            } 
+                        } 
                     }
                     $("#btn_update").click(update_profile);
                 });
