@@ -71,7 +71,7 @@
                                         daftar_pengguna += '<td>'+ response.response[x].username+'</td>';
                                         daftar_pengguna += '<td>'+ response.response[x].tipe+'</td>';
                                         daftar_pengguna += '<td>';
-                                        daftar_pengguna += '<button class="btn btn-primary btn-xs" onClick="approve_open('+response.response[x].id+','+response.response[x].user_blocked+');">';
+                                        daftar_pengguna += '<button class="btn btn-primary btn-xs" onClick="do_approve('+response.response[x].id+','+response.response[x].user_blocked+');">';
                                         daftar_pengguna += '<span class="glyphicon glyphicon-check"></span> Approve'
                                         daftar_pengguna += '</button>';
                                         daftar_pengguna += '</td>';
@@ -98,55 +98,44 @@
                     setInterval(function(){load_blocked();},1000); 
                 });
 
-                function approve_open(id_request,id_user){
-                    $("#notif").html("");
-                    notif += '<div class="alert alert-danger">';
-                    notif += 'Approve open block ?';
-                    notif += '<span class="right">';
-                    notif += '<button style="margin-left:10px;" class="btn" onClick="clear_notif();">Tidak!</button>';
-                    notif += '<button style="margin-left:10px;" class="btn btn-danger" onclick="do_approve('+id_request+','+id_user+');">Ya!</button>';
-                    notif += '</span>';
-                    notif += '</div>';
-                    $("#notif").html(notif);
-                    notif = "";
-                }
-
                 function clear_notif(){
                     document.getElementById('notif').innerHTML = '';
                 }
 
                 function do_approve(id_request,id_user){
-                    var post = {
-                        "id_request" : id_request,
-                        "id_user" : id_user,
-                        "status" : "2"
-                    };
-                    $.ajax({
-                        url : "<?php echo site_url(); ?>/api/do_approve/",
-                        type : "POST",
-                        dataType : "json",
-                        data: post,
-                        success : function(response){
-                            if(response.response.status_cek === 'FAILED' || response.response.status_cek === 'NO DATA POSTED'){
-                                notif += '<div class="alert alert-' + response.response.message_severity + ' alert-dismissable">';
-                                notif += response.response.message;
+                    if (confirm('Apakah Anda yakin akan melakukan approval request open block ?')) {
+                        var post = {
+                            "id_request" : id_request,
+                            "id_user" : id_user,
+                            "status" : "2"
+                        };
+                        $.ajax({
+                            url : "<?php echo site_url(); ?>/api/do_approve/",
+                            type : "POST",
+                            dataType : "json",
+                            data: post,
+                            success : function(response){
+                                if(response.response.status_cek === 'FAILED' || response.response.status_cek === 'NO DATA POSTED'){
+                                    notif += '<div class="alert alert-' + response.response.message_severity + ' alert-dismissable">';
+                                    notif += response.response.message;
+                                    notif += '</div>';
+                                    document.getElementById('notif').innerHTML = notif;
+                                }else{
+                                    notif += '<div class="alert alert-' + response.response.message_severity + ' alert-dismissable">';
+                                    notif += response.response.message;
+                                    notif += '</div>';
+                                    document.getElementById('notif').innerHTML = notif;
+                                }
+                            },
+                            error : function(response){
+                                notif += '<div class="alert alert-danger alert-dismissable">';
+                                notif += 'Terjadi kesalahan pada saat proses approve. Silahkan coba lagi.';
                                 notif += '</div>';
                                 document.getElementById('notif').innerHTML = notif;
-                            }else{
-                                notif += '<div class="alert alert-' + response.response.message_severity + ' alert-dismissable">';
-                                notif += response.response.message;
-                                notif += '</div>';
-                                document.getElementById('notif').innerHTML = notif;
-                            }
-                        },
-                        error : function(response){
-                            notif += '<div class="alert alert-danger alert-dismissable">';
-                            notif += 'Terjadi kesalahan pada saat proses approve. Silahkan coba lagi.';
-                            notif += '</div>';
-                            document.getElementById('notif').innerHTML = notif;
-                            notif = "";
-                        },
-                    });
+                                notif = "";
+                            },
+                        });
+                    }
                 }
                 </script>
 

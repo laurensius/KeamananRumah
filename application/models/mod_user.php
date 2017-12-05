@@ -224,6 +224,7 @@ class Mod_user extends CI_Model{
         $query_str = "SELECT "
         ."t_user.id, " 
         ."t_user.username, "
+        ."t_user.nama, "
         ."t_ref_tipe_user.tipe as tipe, "
         ."(select t_request_open.status from t_request_open, t_user "
         ."where t_request_open.user_blocked = t_user.id order by t_request_open.id desc limit 1) as status, "
@@ -244,7 +245,7 @@ class Mod_user extends CI_Model{
     }
 
     function load_request_block(){
-        $query_str = "select t_request_open.id, t_request_open.user_blocked, t_user.username, t_user.tipe as tp, (Select t_ref_tipe_user.tipe from t_user,t_ref_tipe_user where t_ref_tipe_user.id = tp limit 1) as tipe from t_request_open INNER JOIN t_user on t_request_open.user_blocked = t_user.id and t_request_open.status = '1'";
+        $query_str = "select t_request_open.id, t_request_open.user_blocked, t_user.username, t_user.nama, t_user.tipe as tp, (Select t_ref_tipe_user.tipe from t_user,t_ref_tipe_user where t_ref_tipe_user.id = tp limit 1) as tipe from t_request_open INNER JOIN t_user on t_request_open.user_blocked = t_user.id and t_request_open.status = '1'";
         $query = $this->db->query($query_str);
         return $query->result();
     }

@@ -168,35 +168,37 @@
                         notif += '</div>';
                         document.getElementById('notif').innerHTML = notif;
                     }else{
-                        var post = {
-                            "password" : $("#password").val(),
-                            "status" : $("#status").val(),
-                            "nama" : $("#nama").val(),
-                            "alamat" : $("#alamat").val()
-                        }; 
-                        $.ajax({
-                            url : '<?php echo site_url(); ?>/api/update_pengguna/'+id+'/' ,
-                            type : 'POST',
-                            dataType : 'json',
-                            data : post,
-                            success : function(response){
-                                console.log(response.affected);
-                                if(response.response.status_cek === 'FAILED' || response.response.status_cek === 'FOUND' || response.response.status_cek === 'NO DATA POSTED'){
-                                    notif += '<div class="alert alert-' + response.response.message_severity + ' alert-dismissable">';
-                                    notif += response.response.message;
+                        if (confirm('Apakah Anda yakin akan menyimpan perubahan data ?')) {
+                            var post = {
+                                "password" : $("#password").val(),
+                                "status" : $("#status").val(),
+                                "nama" : $("#nama").val(),
+                                "alamat" : $("#alamat").val()
+                            }; 
+                            $.ajax({
+                                url : '<?php echo site_url(); ?>/api/update_pengguna/'+id+'/' ,
+                                type : 'POST',
+                                dataType : 'json',
+                                data : post,
+                                success : function(response){
+                                    console.log(response.affected);
+                                    if(response.response.status_cek === 'FAILED' || response.response.status_cek === 'FOUND' || response.response.status_cek === 'NO DATA POSTED'){
+                                        notif += '<div class="alert alert-' + response.response.message_severity + ' alert-dismissable">';
+                                        notif += response.response.message;
+                                        notif += '</div>';
+                                        document.getElementById('notif').innerHTML = notif;
+                                    }else{
+                                        window.location = "<?php echo site_url(); ?>/keamananrumah/daftar_pengguna/";
+                                    }
+                                },
+                                error : function(response){
+                                    notif += '<div class="alert alert-danger alert-dismissable">';
+                                    notif += 'Terjadi kesalahan pada saat update detail pengguna. Silahkan coba lagi.';
                                     notif += '</div>';
                                     document.getElementById('notif').innerHTML = notif;
-                                }else{
-                                    window.location = "<?php echo site_url(); ?>/keamananrumah/daftar_pengguna/";
-                                }
-                            },
-                            error : function(response){
-                                notif += '<div class="alert alert-danger alert-dismissable">';
-                                notif += 'Terjadi kesalahan pada saat update detail pengguna. Silahkan coba lagi.';
-                                notif += '</div>';
-                                document.getElementById('notif').innerHTML = notif;
-                            },
-                        });  
+                                },
+                            }); 
+                        }  
                     }
                 }
                 $("#btn_update").click(update_pengguna);

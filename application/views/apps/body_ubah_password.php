@@ -33,19 +33,19 @@
                                                     <div class="form-group">
                                                         <label class="col-md-3 control-label">Password saat ini </label>
                                                         <div class="col-md-9">
-                                                            <input type="text" class="form-control" placeholder="Password Anda saat ini" id="current_password" required>
+                                                            <input type="password" class="form-control" placeholder="Password Anda saat ini" id="current_password" required>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-md-3 control-label">Password baru </label>
                                                         <div class="col-md-9">
-                                                            <input type="text" class="form-control" placeholder="Password baru" id="new_password" required>
+                                                            <input type="password" class="form-control" placeholder="Password baru" id="new_password" required>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-md-3 control-label">Konfirmasi password baru </label>
                                                         <div class="col-md-9">
-                                                            <input type="text" class="form-control" placeholder="Konfirmasi password baru" id="confirm_password" required>
+                                                            <input type="password" class="form-control" placeholder="Konfirmasi password baru" id="confirm_password" required>
                                                         </div>
                                                     </div> 
                                                 </form>
@@ -86,37 +86,39 @@
                             notif += '</div>';
                             document.getElementById('notif').innerHTML = notif;
                         }else{
-                            var post = {
-                                "password" : current_password,
-                                "new_password" : new_password
-                            }; 
-                            $.ajax({
-                                url : '<?php echo site_url(); ?>/api/update_password/<?php echo $this->session->userdata("session_appssystem_id"); ?>/' ,
-                                type : 'POST',
-                                dataType : 'json',
-                                data : post,
-                                success : function(response){
-                                    console.log(response);
-                                    if(response.response.status_cek === 'FAILED' || response.response.status_cek === 'NOT MATCH' || response.response.status_cek === 'NO DATA POSTED'){
-                                        notif += '<div class="alert alert-' + response.response.message_severity + ' alert-dismissable">';
-                                        notif += response.response.message;
+                            if (confirm('Apakah Anda yakin akan melakukan perubahan password ?')) {
+                                var post = {
+                                    "password" : current_password,
+                                    "new_password" : new_password
+                                }; 
+                                $.ajax({
+                                    url : '<?php echo site_url(); ?>/api/update_password/<?php echo $this->session->userdata("session_appssystem_id"); ?>/' ,
+                                    type : 'POST',
+                                    dataType : 'json',
+                                    data : post,
+                                    success : function(response){
+                                        console.log(response);
+                                        if(response.response.status_cek === 'FAILED' || response.response.status_cek === 'NOT MATCH' || response.response.status_cek === 'NO DATA POSTED'){
+                                            notif += '<div class="alert alert-' + response.response.message_severity + ' alert-dismissable">';
+                                            notif += response.response.message;
+                                            notif += '</div>';
+                                            document.getElementById('notif').innerHTML = notif;
+                                        }else
+                                        if(response.response.status_cek === 'SUCCESS'){
+                                            notif += '<div class="alert alert-' + response.response.message_severity + ' alert-dismissable">';
+                                            notif += response.response.message;
+                                            notif += '</div>';
+                                            document.getElementById('notif').innerHTML = notif;
+                                        }
+                                    },
+                                    error : function(response){
+                                        notif += '<div class="alert alert-danger alert-dismissable">';
+                                        notif += 'Terjadi kesalahan pada saat update password. Silahkan coba lagi.';
                                         notif += '</div>';
                                         document.getElementById('notif').innerHTML = notif;
-                                    }else
-                                    if(response.response.status_cek === 'SUCCESS'){
-                                        notif += '<div class="alert alert-' + response.response.message_severity + ' alert-dismissable">';
-                                        notif += response.response.message;
-                                        notif += '</div>';
-                                        document.getElementById('notif').innerHTML = notif;
-                                    }
-                                },
-                                error : function(response){
-                                    notif += '<div class="alert alert-danger alert-dismissable">';
-                                    notif += 'Terjadi kesalahan pada saat update password. Silahkan coba lagi.';
-                                    notif += '</div>';
-                                    document.getElementById('notif').innerHTML = notif;
-                                },
-                            });
+                                    },
+                                });
+                            }                             
                         } 
                         $("#current_password").val('');
                         $("#new_password").val('');

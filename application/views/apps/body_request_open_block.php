@@ -72,9 +72,9 @@
                                         daftar_pengguna += '<td>'+ response.response[x].tipe+'</td>';
                                         daftar_pengguna += '<td>';
                                         if(response.response[x].status == "1"){
-                                            daftar_pengguna += '<span class="label label-primary">Menunggu Approval Root</span>'  
+                                            daftar_pengguna += '<span class="label label-warning">Menunggu Approval Root</span>'  
                                         }else{
-                                            daftar_pengguna += '<button class="btn btn-primary btn-xs" onClick="request_open('+response.response[x].id+');">';
+                                            daftar_pengguna += '<button class="btn btn-primary btn-xs" onClick="do_request('+response.response[x].id+');">';
                                             daftar_pengguna += '<span class="glyphicon glyphicon-edit"></span> Request Open'
                                             daftar_pengguna += '</button>';
                                         }
@@ -102,55 +102,46 @@
                     setInterval(function(){load_blocked();},1000); 
                 });
 
-                function request_open(id){
-                    $("#notif").html("");
-                    notif += '<div class="alert alert-danger">';
-                    notif += 'Request open block ?';
-                    notif += '<span class="right">';
-                    notif += '<button style="margin-left:10px;" class="btn" onClick="clear_notif();">Tidak!</button>';
-                    notif += '<button style="margin-left:10px;" class="btn btn-danger" onclick="do_request('+id+');">Ya!</button>';
-                    notif += '</span>';
-                    notif += '</div>';
-                    $("#notif").html(notif);
-                    notif = "";
-                }
-
                 function clear_notif(){
                     document.getElementById('notif').innerHTML = '';
                 }
 
                 function do_request(id){
-                    var post = {
-                        "user_blocked" : id,
-                        "user_request" : "<?php echo $this->session->userdata("session_appssystem_id"); ?>",
-                        "status" : "1"
-                    };
-                    $.ajax({
-                        url : "<?php echo site_url(); ?>/api/request_open_block/",
-                        type : "POST",
-                        dataType : "json",
-                        data: post,
-                        success : function(response){
-                            if(response.response.status_cek === 'FAILED' || response.response.status_cek === 'NO DATA POSTED'){
-                                notif += '<div class="alert alert-' + response.response.message_severity + ' alert-dismissable">';
-                                notif += response.response.message;
+                    if (confirm('Apakah Anda yakin akan melakukan request open block ?')) {
+                        var post = {
+                            "user_blocked" : id,
+                            "user_request" : "<?php echo $this->session->userdata("session_appssystem_id"); ?>",
+                            "status" : "1"
+                        };
+                        $.ajax({
+                            url : "<?php echo site_url(); ?>/api/request_open_block/",
+                            type : "POST",
+                            dataType : "json",
+                            data: post,
+                            success : function(response){
+                                if(response.response.status_cek === 'FAILED' || response.response.status_cek === 'NO DATA POSTED'){
+                                    notif += '<div class="alert alert-' + response.response.message_severity + ' alert-dismissable">';
+                                    notif += response.response.message;
+                                    notif += '</div>';
+                                    document.getElementById('notif').innerHTML = notif;
+                                }else{
+                                    notif += '<div class="alert alert-' + response.response.message_severity + ' alert-dismissable">';
+                                    notif += response.response.message;
+                                    notif += '</div>';
+                                    document.getElementById('notif').innerHTML = notif;
+                                }
+                            },
+                            error : function(response){
+                                notif += '<div class="alert alert-danger alert-dismissable">';
+                                notif += 'Terjadi kesalahan pada saat proses request. Silahkan coba lagi.';
                                 notif += '</div>';
                                 document.getElementById('notif').innerHTML = notif;
-                            }else{
-                                notif += '<div class="alert alert-' + response.response.message_severity + ' alert-dismissable">';
-                                notif += response.response.message;
-                                notif += '</div>';
-                                document.getElementById('notif').innerHTML = notif;
-                            }
-                        },
-                        error : function(response){
-                            notif += '<div class="alert alert-danger alert-dismissable">';
-                            notif += 'Terjadi kesalahan pada saat proses request. Silahkan coba lagi.';
-                            notif += '</div>';
-                            document.getElementById('notif').innerHTML = notif;
-                            notif = "";
-                        },
-                    });
+                                notif = "";
+                            },
+                        });
+                    } else {
+                        clear_notif();
+                    }
                 }
                 </script>
 

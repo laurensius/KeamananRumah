@@ -110,41 +110,43 @@
                                 notif += '</div>';
                                 document.getElementById('notif').innerHTML = notif;
                             }else{
-                                var post = {
-                                    "username" : username,
-                                    "password" : password,
-                                    "nama" : nama,
-                                    "alamat" : alamat,
-                                    "parent" : parent,
-                                    "tipe_user" : tipe_user,
-                                    "API_KEY" : "<?php echo $this->session->userdata("session_appssystem_api_key");  ?>",
-                                    "secure_key" : "<?php echo $this->session->userdata("session_appssystem_secure_key"); ?>"
-                                };  
-                                $.ajax({
-                                    url : "<?php echo site_url(); ?>/api/verifikasi_daftar/",
-                                    type : "POST",
-                                    dataType : "json",
-                                    data: post,
-                                    success : function(response){
-                                        if(response.response.status_cek === 'FAILED' || response.response.status_cek === 'FOUND' || response.response.status_cek === 'NO DATA POSTED'){
-                                            notif += '<div class="alert alert-' + response.response.message_severity + ' alert-dismissable">';
-                                            notif += response.response.message;
+                                if (confirm('Apakah Anda yakin akan menambahkan pengguna baru ke dalam sistem ?')) {
+                                    var post = {
+                                        "username" : username,
+                                        "password" : password,
+                                        "nama" : nama,
+                                        "alamat" : alamat,
+                                        "parent" : parent,
+                                        "tipe_user" : tipe_user,
+                                        "API_KEY" : "<?php echo $this->session->userdata("session_appssystem_api_key");  ?>",
+                                        "secure_key" : "<?php echo $this->session->userdata("session_appssystem_secure_key"); ?>"
+                                    };  
+                                    $.ajax({
+                                        url : "<?php echo site_url(); ?>/api/verifikasi_daftar/",
+                                        type : "POST",
+                                        dataType : "json",
+                                        data: post,
+                                        success : function(response){
+                                            if(response.response.status_cek === 'FAILED' || response.response.status_cek === 'FOUND' || response.response.status_cek === 'NO DATA POSTED'){
+                                                notif += '<div class="alert alert-' + response.response.message_severity + ' alert-dismissable">';
+                                                notif += response.response.message;
+                                                notif += '</div>';
+                                                document.getElementById('notif').innerHTML = notif;
+                                            }else{
+                                                notif += '<div class="alert alert-' + response.response.message_severity + ' alert-dismissable">';
+                                                notif += response.response.message;
+                                                notif += '</div>';
+                                                document.getElementById('notif').innerHTML = notif;
+                                            }
+                                        },
+                                        error : function(response){
+                                            notif += '<div class="alert alert-danger alert-dismissable">';
+                                            notif += 'Terjadi kesalahan pada saat proses pendaftaran. Silahkan coba lagi.';
                                             notif += '</div>';
                                             document.getElementById('notif').innerHTML = notif;
-                                        }else{
-                                            notif += '<div class="alert alert-' + response.response.message_severity + ' alert-dismissable">';
-                                            notif += response.response.message;
-                                            notif += '</div>';
-                                            document.getElementById('notif').innerHTML = notif;
-                                        }
-                                    },
-                                    error : function(response){
-                                        notif += '<div class="alert alert-danger alert-dismissable">';
-                                        notif += 'Terjadi kesalahan pada saat proses pendaftaran. Silahkan coba lagi.';
-                                        notif += '</div>';
-                                        document.getElementById('notif').innerHTML = notif;
-                                    },
-                                });
+                                        },
+                                    });    
+                                } 
                             }
                         }
                         $("#daftar").click(cek_daftar);
