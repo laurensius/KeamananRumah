@@ -31,6 +31,7 @@ class Mod_device extends CI_Model{
         return $result->result();
     }
 
+
     function itung_rows(){
         $result = $this->db->query("select count(*) as jumlah from t_sensor");
         return $result->result();
@@ -63,5 +64,29 @@ class Mod_device extends CI_Model{
         $query_str = "SELECT * from t_status_monitoring where API_KEY='".$API_KEY."'";
         $query = $this->db->query($query_str);
         return $query->result();   
+    }
+
+    function cek_download($tanggal_awal, $tanggal_akhir, $API_KEY){
+        $query_str = "SELECT count(*) as jumlah_record FROM t_sensor "
+        ."WHERE "
+        ."(API_KEY='".$API_KEY."') and "
+        ."(state like 'SIAGA%' or state like 'AWAS%' or "
+        ."state like '%SIAGA%' or state like '%AWAS%' or "
+        ."state like '%SIAGA' or state like '%AWAS') and "
+        ."datetime > '". $tanggal_awal ." 00:00:00' and datetime < '". $tanggal_akhir ." 23:59:59'";
+        $query = $this->db->query($query_str);
+        return $query->result(); 
+    }
+
+    function download_report($tanggal_awal, $tanggal_akhir, $API_KEY){
+        $query_str = "SELECT * FROM t_sensor "
+        ."WHERE "
+        ."(API_KEY='".$API_KEY."') and "
+        ."(state like 'SIAGA%' or state like 'AWAS%' or "
+        ."state like '%SIAGA%' or state like '%AWAS%' or "
+        ."state like '%SIAGA' or state like '%AWAS') and "
+        ."datetime > '". $tanggal_awal ." 00:00:00' and datetime < '". $tanggal_akhir ." 23:59:59'";
+        $query = $this->db->query($query_str);
+        return $query->result(); 
     }
 }

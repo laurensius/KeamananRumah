@@ -8,6 +8,7 @@ class Api extends CI_Controller {
 		header('Content-Type:application/json');
 		$this->load->model('mod_user');
         $this->load->model('mod_device');
+		require(APPPATH.'\middleware\fpdf.php');
 	}
 
 	function verifikasi(){
@@ -570,6 +571,73 @@ class Api extends CI_Controller {
             );
         }
         echo json_encode(array("response"=>$return));
+    }
+
+    function cek_download(){
+        if($this->uri->segment(3) != null && $this->uri->segment(4) != null && $this->uri->segment(5) != null){
+            $return = $this->mod_device->cek_download($this->uri->segment(3),$this->uri->segment(4),$this->uri->segment(5));
+        }else{
+            $return = array();
+        }
+
+        echo json_encode(array("response"=>$return),JSON_PRETTY_PRINT);
+    }
+
+    function download_report(){
+        if($this->uri->segment(3) != null && $this->uri->segment(4) != null && $this->uri->segment(5) != null){
+            $dataset =  $this->mod_device->download_report($this->uri->segment(3),$this->uri->segment(4),$this->uri->segment(5));
+            $pdf = new FPDF();
+            $header = array('No', 'Tanggal Monitoring', 'Outdoor', 'Indoor', 'Magnetic Switch');
+            $pdf->SetFont('Arial','',14);
+            $pdf->AddPage();
+            
+            // $pdf->Image('assets/LOGO.png');
+            // $pdf->Ln(10);
+            
+            $pdf->SetFont('Arial','BU',12);
+            $pdf->Cell(1);
+            $pdf->Cell(0,10,'LAPORAN MONITORING KEAMANAN RUMAH',0,0,'C');
+            $pdf->Ln(20);
+            
+            $pdf->SetFont('Arial','',12);
+            $pdf->Cell(1);
+            $pdf->Cell(0,0,'API KEY : '.$this->uri->segment(5),0,0,'L');
+            $pdf->Ln(5);
+            
+            $pdf->SetFont('Arial','',12);
+            $pdf->Cell(1);
+            $pdf->Cell(0,0,"Periode :".$this->uri->segment(3)." s/d ".$this->uri->segment(4),0,0,'L');
+            $pdf->Ln(10);
+            //Header Tabel 
+            $pdf->SetFillColor(255,0,0);
+            $pdf->SetTextColor(255);
+            $pdf->SetDrawColor(128,0,0);
+            $pdf->SetLineWidth(.3);
+            $pdf->SetFont('','B');
+            $w = array(15, 65, 36, 36, 36);
+            for($i=0;$i<count($header);$i++)
+            $pdf->Cell($w[$i],7,$header[$i],1,0,'C',true);
+            $pdf->Ln();
+            $pdf->SetFillColor(224,235,255);
+            $pdf->SetTextColor(0);
+            $pdf->SetFont('');
+            //Isi Tabel <Dataset>
+            $fill = false;
+            $ctr = 1;
+            foreach($dataset as $row){
+                $exp_str = explode("_",$row->state);
+                $pdf->Cell($w[0],6,$ctr,'LR',0,'L',$fill);
+                $pdf->Cell($w[1],6,$row->datetime,'LR',0,'L',$fill);
+                $pdf->Cell($w[2],6,$exp_str[0],'LR',0,'R',$fill);
+                $pdf->Cell($w[3],6,$exp_str[1],'LR',0,'R',$fill);
+                $pdf->Cell($w[4],6,$exp_str[2],'LR',0,'R',$fill);
+                $ctr++;
+                $pdf->Ln();
+                $fill = !$fill;
+            }
+            $pdf->output();  
+        }
+        
     }
 
 }
