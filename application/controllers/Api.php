@@ -640,4 +640,15 @@ class Api extends CI_Controller {
         
     }
 
+    function block_by_username(){
+        if($this->uri->segment(3) != null){
+            $data = array("status"=>"2");
+            $return = $this->mod_user->block_by_username($this->uri->segment(3),$data);
+        }else{
+            $return = "";
+        }
+        echo json_encode(array("response"=>array("affected_rows"=>$return)),JSON_PRETTY_PRINT);
+    }
+
+
 }
