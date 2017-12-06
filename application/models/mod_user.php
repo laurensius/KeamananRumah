@@ -84,6 +84,12 @@ class Mod_user extends CI_Model{
         return $this->db->affected_rows();
     }
 
+    function block_by_username($username,$data){
+        $this->db->where('username',$username);
+        $this->db->update('t_user',$data);
+        return $this->db->affected_rows();
+    }
+
     //---------------------------LOAD USER -----------------
     function load_all_parent(){
         $query = "select t_user.id, t_user.username,  t_user.nama, t_user.tipe, t_user.status "
