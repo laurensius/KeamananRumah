@@ -85,7 +85,7 @@
                                     </div>
                                     <div class="details">
                                         <div class="number">
-                                            <span data-counter="counterup"><span id="box_total_record">0</span></span>
+                                            <span data-counter="counterup"><span id="total_record">0</span></span>
                                         </div>
                                         <div class="desc"> Record Total </div>
                                     </div>
