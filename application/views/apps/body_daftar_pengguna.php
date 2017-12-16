@@ -94,7 +94,7 @@
                                         panel_box += '<option value="'+ ctr +'">'+ ctr +'</option>';    
                                         ctr++;
                                     }
-                                    $("#select_page").html(panel_box);
+                                   $("#opt_halaman").html(opt_halaman);
                                 }
                             }else{
                                 daftar_pengguna += '<tr><td colspan="5">Tidak ada data user tersimpan</td></tr>';

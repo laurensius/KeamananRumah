@@ -132,6 +132,16 @@ class Keamananrumah extends CI_Controller {
             $this->load->view("apps/login");
         }
     }
+
+    function laporan(){
+        if($this->session->userdata("session_appssystem_code")){
+            $this->load->view("apps/header");
+            $this->load->view("apps/body_laporan");
+            $this->load->view("apps/footer");
+        }else{
+            $this->load->view("apps/login");
+        }
+    }
     //------------------------------END OF MONITORING--------------------------------------
 
 
