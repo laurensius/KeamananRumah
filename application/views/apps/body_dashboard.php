@@ -13,7 +13,7 @@
                         </div>
                         <h1 class="page-title"> Dashboard</h1>
                         <div class="row">
-                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" id="box_total_pengguna">
                                 <a class="dashboard-stat dashboard-stat-v2 blue" href="#">
                                     <div class="visual">
                                         <i class="fa fa-users"></i>
@@ -26,7 +26,7 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" id="box_pengguna_diblock">
                                 <a class="dashboard-stat dashboard-stat-v2 red" href="#">
                                     <div class="visual">
                                         <i class="fa fa-users"></i>
@@ -39,7 +39,7 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" id="box_total_koordinator">
                                 <a class="dashboard-stat dashboard-stat-v2 green-turquoise" href="#">
                                     <div class="visual">
                                         <i class="fa fa-users"></i>
@@ -52,7 +52,7 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" id="box_total_sibling">
                                 <a class="dashboard-stat dashboard-stat-v2 yellow-saffron" href="#">
                                     <div class="visual">
                                         <i class="fa fa-users"></i>
@@ -65,7 +65,7 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" id="box_record_har_ini">
                                 <a class="dashboard-stat dashboard-stat-v2 green-turquoise" href="#">
                                     <div class="visual">
                                         <i class="fa fa-server"></i>
@@ -78,20 +78,20 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" id="box_record_total">
                                 <a class="dashboard-stat dashboard-stat-v2 yellow-crusta" href="#">
                                     <div class="visual">
                                         <i class="fa fa-database"></i>
                                     </div>
                                     <div class="details">
                                         <div class="number">
-                                            <span data-counter="counterup"><span id="total_record">0</span></span>
+                                            <span data-counter="counterup"><span id="box_total_record">0</span></span>
                                         </div>
                                         <div class="desc"> Record Total </div>
                                     </div>
                                 </a>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" id="box_request_buka_block">
                                 <a class="dashboard-stat dashboard-stat-v2 green-turquoise" href="#">
                                     <div class="visual">
                                         <i class="fa fa-server"></i>
@@ -104,7 +104,7 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" id="box_total_perangkat_aktif">
                                 <a class="dashboard-stat dashboard-stat-v2 yellow-crusta" href="#">
                                     <div class="visual">
                                         <i class="fa fa-database"></i>
@@ -124,6 +124,7 @@
                 var notif = "";
                 $(document).ready(function(){
                     function load_data(){
+                        var tipe_user = '<?php echo $this->session->userdata("session_appssystem_tipe_user"); ?>'; 
                         $.ajax({
                             <?php 
                             if($this->session->userdata("session_appssystem_tipe_user") == "1"){
@@ -141,10 +142,18 @@
                                 $("#pengguna_diblock").html(response.response.user[0].jumlah_user_blocked);
                                 $("#record_hari_ini").html(response.response.database[0].jumlah_record_today);
                                 $("#total_record").html(response.response.database[0].jumlah_record_total);
-                                $("#request_buka_block").html(response.response.request_buka_block[0].request_buka_block);
-                                $("#total_coordinator").html(response.response.jumlah_koordinator[0].jumlah_koordinator);
-                                $("#total_sibling").html(response.response.jumlah_sibling[0].jumlah_sibling);
-                                $("#total_perangkat_aktif").html(response.response.total_perangkat_aktif[0].jumlah_perangkat_aktif);
+                                if(tipe_user == "1"){
+                                    $("#request_buka_block").html(response.response.request_buka_block[0].request_buka_block);
+                                    $("#total_coordinator").html(response.response.jumlah_koordinator[0].jumlah_koordinator);
+                                    $("#total_sibling").html(response.response.jumlah_sibling[0].jumlah_sibling);
+                                    $("#total_perangkat_aktif").html(response.response.total_perangkat_aktif[0].jumlah_perangkat_aktif);    
+                                }else{
+                                    $("#box_request_buka_block").remove();
+                                    $("#box_total_koordinator").remove();
+                                    $("#box_total_sibling").remove();
+                                    $("#box_total_perangkat_aktif").remove();  
+                                }
+                                
                             },
                             error : function(response){
                                 

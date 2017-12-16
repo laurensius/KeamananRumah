@@ -125,6 +125,9 @@
                                     </li>
                                 </ul>
                             </li>
+                            <?php
+                            if($this->session->userdata("session_appssystem_tipe_user") != "1"){
+                            ?>
                             <li class="nav-item start">
                                 <a href="#" class="nav-link nav-toggle">
                                     <i class="icon-magnifier"></i>
@@ -156,7 +159,9 @@
                                     <?php } ?>
                                 </ul>
                             </li>
-							
+							<?php
+                            } 
+                            ?>
                         </ul>
                     </div>
                 </div>
