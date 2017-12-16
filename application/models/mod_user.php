@@ -233,12 +233,16 @@ class Mod_user extends CI_Model{
         ."t_user.nama, "
         ."t_ref_tipe_user.tipe as tipe, "
         ."(select t_request_open.status from t_request_open, t_user "
-        ."where t_request_open.user_blocked = t_user.id order by t_request_open.id desc limit 1) as status, "
+        ."where t_request_open.user_blocked = t_user.id  order by t_request_open.id desc limit 1) as status, "
         ."(select count(t_request_open.user_blocked) from t_request_open, t_user "
         ."where t_request_open.user_blocked = t_user.id and t_request_open.status='1') as jumlah "
         ."from t_user "
         ."inner join t_ref_tipe_user "
         ."on t_user.tipe = t_ref_tipe_user.id "
+        // ."and t_request_open.status = '1' "
+        // ."inner join t_request_open "
+        // ."on t_user.id = t_request_open.id "
+        // ."and t_request_open.status='1' "
         ."and t_user.status='2' and t_user.API_KEY='".$API_KEY."' "
         ."";
         $query = $this->db->query($query_str);
