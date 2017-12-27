@@ -29,7 +29,8 @@
             <div class="row bs-reset">
                 <div class="col-md-6 bs-reset mt-login-5-bsfix">
                     <div class="login-bg" style="background-image:url(<?php echo base_url();?>assets/pages/img/login/bg1.jpg)">
-                        <img class="login-logo" src="<?php echo base_url();?>assets/pages/img/login/logo.png" /> </div>
+<!--                     <img class="login-logo" src="<?php echo base_url();?>assets/pages/img/login/home_secure.png" /> -->
+                    </div>
                 </div>
                 <div class="col-md-6 login-container bs-reset mt-login-5-bsfix">
                     <div class="login-content">
